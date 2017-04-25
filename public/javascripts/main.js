@@ -89,14 +89,17 @@ var pricing= {
 
 };
 function insertProduct() {
-    var productName = document.getElementById('pname').value;
-    var pid = document.getElementById('pid');
-    var pdesc = document.getElementById('');
-    var authorName = document.getElementById('');
-    var bookName = document.getElementById('');
-    var publiserName  = document.getElementById('');
-    var baseCategory;
-    var SubCategory;
+    pop('submit Button');
+    // var productName = document.getElementById('pname').value;
+    // var pid = document.getElementById('pid');
+    // var pdesc = document.getElementById('');
+    // var authorName = document.getElementById('');
+    // var bookName = document.getElementById('');
+    // var publiserName  = document.getElementById('');
+    // var baseCategory = document.getElementById('base_category');
+
+    var date = $("#datepicker").datepicker().val();
+    console.log(date);
     var ISBN  = document.getElementById('');
     var ISBN13 = document.getElementById('');
     var DatePublsihed;
@@ -308,15 +311,127 @@ function insertProduct() {
 // */
 // });
 
+var mSubCat;
 function Start() {
+
 
     var db = firebase.database();
     var storage = firebase.storage();
     console.log('Print Something');
     setPid(db);
     var submitButton = document.getElementById('submit_button');
-    submitButton.addEventListener('click',insertProduct);
+    submitButton.addEventListener('onclick', insertProduct);
+    var base_category = document.getElementById('base_category');
+    mSubCat = document.getElementById('sub_category');
+
+
+
     // initVariables();
 
+}
+
+
+/*The Base Category Event Listener
+* if
+* Base Catgory Id = 0, alert
+* else
+* fill Sub catgory according to Genre
+* */
+
+
+
+function dateSelected(date,ui) {
+   pop(date);
+}
+
+function resetSubCategoriesOptions() {
+    pop('clearing options');
+
+    var mSubCategory = document.getElementById('sub_category');
+    for (var i = 0; i < mSubCategory.length; i++){
+
+       mSubCategory.remove(i);
+    }
+}
+function populateCompetitiveCateogires() {
+
+    // pop('here');
+    resetSubCategoriesOptions();
+    var c_categories = ["GRE","GMAT","IELTS","APTI","TOEFL","MATHS INTRO","KPSC","TNPSC","BANKING","SSB","AFCAT","CENTRAL GOVERNTMENT"];
+
+
+
+
+    var  options;
+    var mSubCategory = document.getElementById('sub_category');
+    for (var i =0;i < c_categories.length;i++){
+        options = document.createElement("option");
+        options.value = c_categories[i];
+        options.text = c_categories[i];
+
+
+        mSubCategory.appendChild(options);
+
+    }
+}
+var populateGeneralCategories = function () {
+    resetSubCategoriesOptions();
+    var categories = ["Science Ficton","Drama","Action and Adventure","Romance","Mystery","Horror","Self help","Health",
+        "Guide","Travel","Children's","Religion, Spirituality & New Age","Science","History","Math"
+        ,"Poetry","Encylopedia's","Dictionaries","Comics","Art","CookBooks","Diaries","Journals","Prayer Books","Series","Triology"
+        ,"Biographies","Autobiographies","Fantasy","Adult"
+
+    ];
+
+    var mSubCategory = document.getElementById('sub_category');
+
+    var  options;
+    for (var i =0;i < categories.length;i++){
+        options = document.createElement("option");
+        options.value = categories[i];
+        options.text = categories[i];
+
+           mSubCategory.appendChild(options);
+
+    }
+};
+var populateStartupBooks = function () {
+
+};
+var populateCollegeBooks = function () {
+
+};
+function baseCategorySelected(data){
+    var vale = data.value;
+    pop(data.value);
+    switch (vale){
+        case '0':
+            popAlert('Enter a Proper Category');
+            return;
+        case '1':
+            console.log('here');
+            populateCompetitiveCateogires();
+            break;
+        case '2':
+            populateGeneralCategories();
+            break;
+        case '3':
+            populateStartupBooks();
+            break;
+        case '4':
+            populateCollegeBooks();
+            break;
+        default:
+            break;
+    }
+
+
+
+
+
+};
+
+function popAlert(data) {
+    alert(data);
 }
 window.onload = Start();

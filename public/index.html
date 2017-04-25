@@ -27,8 +27,11 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="javascripts/main.js"></script>
     <script>
+
       $( function() {
         $( "#datepicker" ).datepicker();
+
+
       } );
     </script>
 
@@ -194,12 +197,12 @@
 
 
                   <p>Base Category</p>
-                  <select class="mdl-select__input c_class"  id="base_category" name="Base Cateogry">
-                    <option value="t_none">Select Main Category</option>
-                    <option value="t_yes">Competitive</option>
-                    <option value="t_no">General</option>
-                    <option value="t_no">Startup</option>
-                    <option value="t_no">College</option>
+                  <select class="mdl-select__input c_class"  onchange="baseCategorySelected(this)" id="base_category" name="Base Cateogry">
+                    <option value="0">Select Main Category</option>
+                    <option value="1">Competitive</option>
+                    <option value="2">General</option>
+                    <option value="3">Startup</option>
+                    <option value="4">College</option>
                   </select>
 
                 </div>
@@ -211,10 +214,7 @@
                   <p>Sub Category</p>
                   <select class="mdl-select__input c_class"  id="sub_category" name="Subcategory">
                     <option value="t_none">Select Main Category</option>
-                    <option value="t_yes">Competitive</option>
-                    <option value="t_no">General</option>
-                    <option value="t_no">Startup</option>
-                    <option value="t_no">College</option>
+
                   </select>
 
                 </div>
@@ -300,52 +300,49 @@
                 <h2 class="mdl-card__title-text">Pricing</h2>
 
               </div>
-              <p>Unit - Time Unit - price</p>
-              <div class="pricing_inner_container">
-                 <!--Must have  a Minimum of 3 Pricing and Also capable of Adding More-->
-                <div class="pricing_container1">
+              <table class="mdl-data-table mdl-js-data-table  mdl-shadow--2dp">
+                <thead>
+                <tr>
+                  <th class="mdl-data-table__cell--non-numeric">Unit</th>
+                  <th>Time unit</th>
+                  <th>Price</th>
+                </tr>
+                </thead>
 
-                    <input class="mdl-textfield__input c_class"  type="text" style="border:1px solid #36353F"  id="unit_one_text">
-                     <select class="mdl-select__input c_class"  id="time_value1" name="TimeUnit">
-                      <option value="none">Select Time Unit</option>
-                      <option value="option1">Day</option>
-                      <option value="option2">Week</option>
-                      <option value="option3">Month</option>
-                    </select>
-                  <input class="mdl-textfield__input c_class pric_text" style="border:1px solid #36353F" type="text" id="price_one_text">
-
-
-                </div>
-                <br>
-                <div></div>
-                <div class="pricing_container2">
-
-                  <input class="mdl-textfield__input c_class"  type="text" style="border:1px solid #36353F"  id="unit_two_text">
-                  <select class="mdl-select__input c_class"  id="time_value2" name="TimeUnit">
+                <tbody class="table_body">
+                <tr>
+                  <td><input class="mdl-textfield__input c_class"  type="text" style="border:1px solid #36353F"  id="unit_one_text"></td>
+                  <td> <select class="mdl-select__input c_class select_class"  id="time_value1" name="TimeUnit">
                     <option value="none">Select Time Unit</option>
                     <option value="option1">Day</option>
                     <option value="option2">Week</option>
                     <option value="option3">Month</option>
-                  </select>
-                  <input class="mdl-textfield__input c_class pric_text" style="border:1px solid #36353F" type="text" id="price_two_text">
+                  </select></td>
+                  <td> <input class="mdl-textfield__input c_class pric_text" style="border:1px solid #36353F" type="text" id="price_one_text"></td>
+                </tr>
 
-            </div>
-                <br>
-                <div></div>
-                <div class="pricing_container3">
-
-                    <input class="mdl-textfield__input c_class"  type="text" style="border:1px solid #36353F"  id="unit_three_text">
-                    <select class="mdl-select__input c_class"  id="time_value13" name="TimeUnit">
-                      <option value="none">Select Time Unit</option>
-                      <option value="option1">Day</option>
-                      <option value="option2">Week</option>
-                      <option value="option3">Month</option>
-                    </select>
-                    <input class="mdl-textfield__input c_class pric_text" style="border:1px solid #36353F" type="text" id="price_three_text">
-
-
-                  </div>
-              </div>
+                <tr>
+                  <td><input class="mdl-textfield__input c_class"  type="text" style="border:1px solid #36353F"  id="unit_two_text"></td>
+                  <td> <select class="mdl-select__input c_class select_class"  id="time_value2" name="TimeUnit">
+                    <option value="none">Select Time Unit</option>
+                    <option value="option1">Day</option>
+                    <option value="option2">Week</option>
+                    <option value="option3">Month</option>
+                  </select></td>
+                  <td> <input class="mdl-textfield__input c_class pric_text" style="border:1px solid #36353F" type="text" id="price_two_text"></td>
+                </tr>
+                <tr>
+                  <td><input class="mdl-textfield__input c_class"  type="text" style="border:1px solid #36353F"  id="unit_three_text"></td>
+                  <td> <select class="mdl-select__input c_class select_class"  id="time_value13" name="TimeUnit">
+                    <option value="none">Select Time Unit</option>
+                    <option value="option1">Day</option>
+                    <option value="option2">Week</option>
+                    <option value="option3">Month</option>
+                  </select></td>
+                  <td> <input class="mdl-textfield__input c_class pric_text" style="border:1px solid #36353F" type="text" id="price_three_text"></td>
+                </tr>
+                </tbody>
+                             </table>
               <!-- Colored raised button -->
               <!-- Accent-colored raised button with ripple -->
               <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent add_more_button">
