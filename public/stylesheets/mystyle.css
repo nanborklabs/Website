@@ -1,0 +1,149 @@
+
+
+
+.top_header{
+
+    float: left;
+    display: inline-block;
+
+
+}
+
+
+.myclass{
+    max-width: 50px;
+}
+#product_count,#total_inv_cost,#total_combo{
+    margin-left: 25px;
+    padding-left: 10px;
+}
+
+
+#unit1{
+    border: 2px black;
+}
+
+.c_class{
+    display: inline-block;
+    float: left;
+}
+.pric_text{
+    width: 50px;
+    max-width: 50px;
+    border: #3221ff;
+}
+
+.first_container,.second_container,.third_contaier{
+    margin-left: 30px;
+    margin-top: 10px;
+    width:200px;
+    margin-bottom: 10px;
+    display: inline-block;
+    float: left;
+}
+
+.top_section{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: inline;
+}
+
+.add_book_card{
+
+    margin-top: 20px;
+    margin-left: 10%;
+
+}
+
+
+.left_side{
+    margin-bottom: 60px;
+}
+
+.pid_container{
+    float: left;
+    display: inline-block;
+    vertical-align: top;
+
+
+}
+
+.submit_button{
+    margin-left: 20px;
+    margin-top: 100px;
+    width: 200px;
+}
+
+#add_form{
+    padding-left: 20px;
+}
+
+#pid_text_para{
+    text-align: center;
+    align-items:center;
+
+}
+
+
+.left_side,.right_side{
+    display: inline-block;
+    float: left;
+    margin-left: 50px;
+    margin-top: 10px;
+}
+
+
+
+.submit_button{
+    margin-top: 200px;
+}
+.submit_button_class{
+    margin-left: 200px;
+}
+
+.pricing_inner_container{
+    display: inline-block;
+    float: left;
+}
+.add_book_card{
+    margin-bottom: 100px;
+}
+#pid_div{
+    margin-left: 10px;
+}
+
+.l_class{
+    max-width: 40px;
+}
+
+#pid_div,#pid_text_para{
+    display: inline-block;
+    float: left;
+
+}
+
+.pricing_inner_container{
+    margin-left: 30px;
+}
+
+
+.pricing_container1{
+    display: inline-block;
+    float: left;
+}
+
+
+#unit_one_text,#price_one_text,#time_value1,#unit_two_text,#unit_three_text,#price_two_text,#price_three_text,#time_value2,#time_value13{
+    margin-left: 5px;
+}
+
+
+.add_more_button{
+    margin: 10px 32px;
+    padding-left: 10px;
+}
+
+.c_class{
+    max-width: 80px;
+
+}
