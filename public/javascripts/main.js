@@ -61,7 +61,9 @@ function pop(data) {
 var pricing= {
     unit : 0,
     timeUnit: 0,
+    timeText : 'NA',
     price:0,
+
     init: function (mUnit,mTimeUnit,mPrice) {
         this.unit =  mUnit;
         this.timeUnit = mTimeUnit;
@@ -88,6 +90,8 @@ var pricing= {
     }
 
 };
+
+
 
 InsertBook.prototype.insertProduct = function (event) {
 
@@ -295,6 +299,8 @@ InsertBook.prototype.insertProduct = function (event) {
 var mSubCat;
 
 
+InsertBook.prototype.isImageUploded = false;
+
 InsertBook.prototype.productEntitiy = {
       imageURL : '',
        pName:''
@@ -345,6 +351,8 @@ InsertBook.prototype.saveImage = function (event) {
             this.productEntitiy.imageURL = snapshot.downloadURL;
             pop('file Inserted');
             this.showImageUploadedToast();
+            this.isImageUploded = true;
+
 
             // console.log(snapshot.downloadURL);
             // pop(snapshot.fullpath.toString());
@@ -381,6 +389,7 @@ function InsertBook() {
     this.bSumm = document.getElementById('bsummary');
     this.publiserName  = document.getElementById('pubname');
     this.baseCategory = document.getElementById('base_category');
+    this.subCateogry  = document.getElementById('sub_category');
 
     this.date = $("#datepicker").datepicker();
     this.ISBN  = document.getElementById('isbn10');
@@ -411,6 +420,22 @@ function InsertBook() {
 
     this.mediaCapture.addEventListener('change',this.saveImage.bind(this));
 
+
+    //
+    this.unit1 = document.getElementById('unit_one_text');
+    this.unit2 = document.getElementById('unit_two_text');
+    this.unit3 = document.getElementById('unit_three_text');
+
+    //Time Unit
+    this.tm1 = document.getElementById('time_value1');
+    this.tm2 = document.getElementById('time_value2');
+    this.tm3 = document.getElementById('time_value13');
+
+    //Price
+    this.price1 = document.getElementById('price_one_text');
+    this.price2 = document.getElementById('price_two_text');
+    this.price3 = document.getElementById('price_three_text');
+
     this.auth = firebase.auth();
     this.database = firebase.database();
     this.storage = firebase.storage();
@@ -431,27 +456,130 @@ function InsertBook() {
 
 
 function validateText(text) {
-    pop('validting sub');
-    if (text.length == 0 && text == null){
-        pop('returning false');
+    pop(text);
+
+    if (text =='' ){
+
         return false;
     }
-
-    return true;
+    else {
+        return true;
+    }
 }
 
 
-
+function validateNumber(munit1) {
+    if (munit1 == ''){
+        return false;
+    }
+    else{
+        return true;
+    }
+}
 InsertBook.prototype.validateFields  = function (){
     pop('validating Fields');
+
+    //validating Product Name
     var pname = this.productName.value;
-        var bool =  validateText(pname);
-    if (!bool) this.showEmptyText('Enter Product Name');
-        //Correct Validateion
+        if (!validateText(pname)) this.showEmptyText('Enter Product Name');
+    //product Desc
+    var pDesc = this.pdesc.value;
+        if (!validateText(pDesc)) this.showEmptyText('Enter Product Description');
+    //Author Name
+    var aName = this.authorName.value;
+        if (!validateText(aName)) this.showEmptyText('Enter Author Name');
+    //Book Summary
+    var bSumm  = this.bSumm.value;
+        if (!validateText(bSumm)) this.showEmptyText('Enter Book Summary');
+
+    //Publisher Name
+    var pubName = this.publiserName.value;
+        if (!validateText(pubName)) this.showEmptyText('Enter Publisher Name');
+    //base Cateogry
+    var category = this.baseCategory.options[this.baseCategory.selectedIndex].value;
+            if (category == 0){
+                this.showEmptyText('Select a Category');
+            }
+
+    // Subcategory
+    var subCategory = this.subCateogry.options[this.subCateogry.selectedIndex].value;
+       if (subCategory == 0){
+           this.showEmptyText('Select a SubCategory');
+       }
+
+    //ISBN 10
+    var ISBN = this.ISBN.value;
+        if (!validateText(ISBN)) this.showEmptyText('Enter ISBN');
+
+    var ISBN13 = this.ISBN13.value;
+        if (!validateText(ISBN13)) this.showEmptyText('Enter ISBN13');
+
+    var MRP = this.MRP.value;
+    if (!validateText(MRP)) this.showEmptyText('Enter MRP');
+
+    var ourPrice  = this.ourPrice.value;
+    if (!validateText(ourPrice)) this.showEmptyText('Enter Bought Price');
+
+    if(this.isImageUploded == false){
+        this.showEmptyText('Upload image');
+
+    }
+
+    var ibs = this.isBestSeller.options[this.isBestSeller.selectedIndex].value;
+        if (ibs == 0){
+                this.showEmptyText('Choose Whether Best Seller or Not');
+        }
+
+    var itr = this.isTopRated.options[this.isTopRated.selectedIndex].value;
+        if (itr == 0){
+            this.showEmptyText('Select IS Top Rated');
+        }
+
+    var munit1 = this.unit1.value;
+            if (!validateNumber(munit1))  this.showEmptyText('Enter Unit 1');
+    var munit2 = this.unit2.value;
+        if (!validateNumber(munit2))  this.showEmptyText('Enter Unit 1');
+    var munit3 = this.unit3.value;
+    if (!validateNumber(munit3))  this.showEmptyText('Enter Unit 1');
+
+    var mTU1  =this.tm1.options[this.tm1.selectedIndex].value;
+        if (mTU1 == 0){
+            this.showEmptyText('Select 1st Time unit');
+        }
+    var mTU2  =this.tm2.options[this.tm2.selectedIndex].value;
+        if (mTU1 == 0){
+            this.showEmptyText('Select 2nd Time unit');
+        }
+    var mTU3  =this.tm3.options[this.tm3.selectedIndex].value;
+         if (mTU1 == 0){
+                this.showEmptyText('Select 3rd Time unit');
+        }
+    var price1 = this.price1.value;
+        if (!validateNumber(price1)){
+            this.showEmptyText('Enter PRice 1');
+        }
+
+    var price2 = this.price2.value;
+        if (!validateNumber(price2)){
+            this.showEmptyText('Enter PRice 2');
+        }
+
+    var price3 = this.price3.value;
+        if (!validateNumber(price3)){
+            this.showEmptyText('Enter PRice 2');
+        }
 
 
 
-    };
+
+
+
+
+
+
+
+
+};
 
 
 function dateSelected(date,ui) {
@@ -472,7 +600,7 @@ function populateCompetitiveCateogires() {
 
     // pop('here');
     resetSubCategoriesOptions();
-    var c_categories = ["GRE","GMAT","IELTS","APTI","TOEFL","MATHS INTRO","KPSC","TNPSC","BANKING","SSB","AFCAT","CENTRAL GOVERNTMENT"];
+    var c_categories = ["Sub Category","GRE","GMAT","IELTS","APTI","TOEFL","MATHS INTRO","KPSC","TNPSC","BANKING","SSB","AFCAT","CENTRAL GOVERNTMENT"];
 
 
 
@@ -491,7 +619,7 @@ function populateCompetitiveCateogires() {
 }
 var populateGeneralCategories = function () {
     resetSubCategoriesOptions();
-    var categories = ["Science Ficton","Drama","Action and Adventure","Romance","Mystery","Horror","Self help","Health",
+    var categories = ["Sub Category","Science Ficton","Drama","Action and Adventure","Romance","Mystery","Horror","Self help","Health",
         "Guide","Travel","Children's","Religion, Spirituality & New Age","Science","History","Math"
         ,"Poetry","Encylopedia's","Dictionaries","Comics","Art","CookBooks","Diaries","Journals","Prayer Books","Series","Triology"
         ,"Biographies","Autobiographies","Fantasy","Adult"
