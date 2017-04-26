@@ -25,6 +25,9 @@
     <link rel="stylesheet" href="/resources/demos/style.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.blue-light_blue.min.css" />
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
     <script src="javascripts/main.js"></script>
     <script>
 
@@ -37,9 +40,7 @@
 
     <link rel="stylesheet" href="stylesheets/mystyle.css"/>
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.blue-light_blue.min.css" />
-    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+
 
     <style media="screen">
       body { background: #ECEFF1; color: rgba(0,0,0,0.87); font-family: Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; }
@@ -71,6 +72,11 @@
 
       <!--The Content of Tabs here-->
       <main class="mdl-layout__content">
+        <div id="must-signin-snackbar" class="mdl-js-snackbar mdl-snackbar">
+          <div class="mdl-snackbar__text"></div>
+          <button class="mdl-snackbar__action" type="button"></button>
+        </div>
+
 
 
         <!--The OVerview Content-->
@@ -158,7 +164,7 @@
                 <div class="pid_container">
                   <p id="pid_text_para">Pid (Generated)</p>
                   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="pid_div">
-                        <input class="mdl-textfield__input" type="text" id="pid_text">
+                        <input class="mdl-textfield__input" type="text" id="pid_text" >
                         <label class="mdl-textfield__label" for="pid_text">PID...</label>
                   </div>
                 </div>
@@ -168,29 +174,29 @@
 
 
                   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                    <input class="mdl-textfield__input" type="text" id="pname">
+                    <input class="mdl-textfield__input" type="text" id="pname" pattern="[A-Z,a-z, ]*">
                     <label class="mdl-textfield__label" for="pname">Product Name</label>
                   </div>
 
                 <!--Product Description-->
                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                  <input class="mdl-textfield__input" type="text" id="pdesc">
+                  <input class="mdl-textfield__input" type="text" id="pdesc" pattern="[A-Z,a-z, ]*">
                   <label class="mdl-textfield__label" for="pdesc">Product Desc</label>
                 </div>
                 <!--Author Name-->
                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                  <input class="mdl-textfield__input" type="text" id="aname">
+                  <input class="mdl-textfield__input" type="text" id="aname" pattern="[A-Z,a-z, ]*">
                   <label class="mdl-textfield__label" for="aname">Author Name</label>
                 </div>
 
                 <!--Book Smmary -->
                 <div class="mdl-textfield mdl-js-textfield">
-                <textarea class="mdl-textfield__input" type="text" rows="3" maxrows="6" id="bsummary"></textarea>
+                <textarea class="mdl-textfield__input" type="text" rows="3" maxrows="6" id="bsummary" pattern="[A-Z,a-z, ]*"></textarea>
                   <label class="mdl-textfield__label" for="bsummary">Book Brief Description(back of The Book)</label>
                 </div>
                 <!--Publiser Name-->
                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                  <input class="mdl-textfield__input" type="text" id="pubname">
+                  <input class="mdl-textfield__input" type="text" id="pubname" pattern="[A-Z,a-z, ]*">
                   <label class="mdl-textfield__label" for="pubname">Publisher Name</label>
                 </div>
                 <div>
@@ -222,11 +228,12 @@
 
                 <!--ISBN 10-->
                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                  <input class="mdl-textfield__input" type="text" id="isbn10">
+                  <input class="mdl-textfield__input" type="text" id="isbn10" pattern="[0-9]*">
                   <label class="mdl-textfield__label" for="isbn10">ISBN 10</label>
                 </div>
+                <!--ISBN 13-->
                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                  <input class="mdl-textfield__input" type="text" id="isbn13">
+                  <input class="mdl-textfield__input" type="text" id="isbn13" pattern="[0-9]*">
                   <label class="mdl-textfield__label" for="isbn13">ISBN 13</label>
                 </div>
                 <!--Published Date-->
@@ -235,13 +242,15 @@
 
                 <!--MRP Price-->
                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                  <input class="mdl-textfield__input" type="text" id="mrp">
+                  <input class="mdl-textfield__input" type="text" id="mrp" pattern="[0-9]*">
                   <label class="mdl-textfield__label" for="mrp">MRP</label>
                 </div>
 
+
+                <!--Our Buying Price-->
                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                  <input class="mdl-textfield__input" type="text" id="our_price">
-                  <label class="mdl-textfield__label" for="our_price">OUR Price</label>
+                  <input class="mdl-textfield__input" type="text" id="our_price" pattern="[0-9]*">
+                  <label class="mdl-textfield__label" for="our_price">Our Price</label>
                 </div>
 
 
@@ -270,7 +279,7 @@
 
                 <div>
                   <label for="tags">Search Tags(Keyowords)</label>
-                  <textarea type="text" rows="6" id="tags"></textarea>
+                  <textarea type="text" rows="6" id="tags" ></textarea>
 
                 </div>
 
@@ -311,35 +320,35 @@
 
                 <tbody class="table_body">
                 <tr>
-                  <td><input class="mdl-textfield__input c_class"  type="text" style="border:1px solid #36353F"  id="unit_one_text"></td>
+                  <td><input class="mdl-textfield__input c_class"  pattern="[0-9]*" type="number" style="border:1px solid #36353F"  id="unit_one_text"></td>
                   <td> <select class="mdl-select__input c_class select_class"  id="time_value1" name="TimeUnit">
                     <option value="none">Select Time Unit</option>
                     <option value="option1">Day</option>
                     <option value="option2">Week</option>
                     <option value="option3">Month</option>
                   </select></td>
-                  <td> <input class="mdl-textfield__input c_class pric_text" style="border:1px solid #36353F" type="text" id="price_one_text"></td>
+                  <td> <input class="mdl-textfield__input c_class pric_text" style="border:1px solid #36353F" type="number" id="price_one_text"></td>
                 </tr>
 
                 <tr>
-                  <td><input class="mdl-textfield__input c_class"  type="text" style="border:1px solid #36353F"  id="unit_two_text"></td>
+                  <td><input class="mdl-textfield__input c_class"  type="number" style="border:1px solid #36353F"  id="unit_two_text"></td>
                   <td> <select class="mdl-select__input c_class select_class"  id="time_value2" name="TimeUnit">
                     <option value="none">Select Time Unit</option>
                     <option value="option1">Day</option>
                     <option value="option2">Week</option>
                     <option value="option3">Month</option>
                   </select></td>
-                  <td> <input class="mdl-textfield__input c_class pric_text" style="border:1px solid #36353F" type="text" id="price_two_text"></td>
+                  <td> <input class="mdl-textfield__input c_class pric_text" style="border:1px solid #36353F" type="number" id="price_two_text"></td>
                 </tr>
                 <tr>
-                  <td><input class="mdl-textfield__input c_class"  type="text" style="border:1px solid #36353F"  id="unit_three_text"></td>
+                  <td><input class="mdl-textfield__input c_class"  type="number" style="border:1px solid #36353F"  id="unit_three_text"></td>
                   <td> <select class="mdl-select__input c_class select_class"  id="time_value13" name="TimeUnit">
                     <option value="none">Select Time Unit</option>
                     <option value="option1">Day</option>
                     <option value="option2">Week</option>
                     <option value="option3">Month</option>
                   </select></td>
-                  <td> <input class="mdl-textfield__input c_class pric_text" style="border:1px solid #36353F" type="text" id="price_three_text"></td>
+                  <td> <input class="mdl-textfield__input c_class pric_text" style="border:1px solid #36353F" type="number" id="price_three_text"></td>
                 </tr>
                 </tbody>
                              </table>
@@ -359,13 +368,13 @@
                 <h2 class="mdl-card__title-text">Upload Image</h2>
               </div>
 
-              <div class="image_form">
+              <div class="image_form_class">
+
                 <form id="image-form" action="#">
-
                   <input id="mediaCapture" type="file" accept="image/*,capture=camera">
-
-
-
+                  <button id="submitImage" title="Add an image" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--amber-400 mdl-color-text--white">
+                    <i class="material-icons">image</i>
+                  </button>
                 </form>
               </div>
 
@@ -373,11 +382,7 @@
 
             <br>
             <br>
-             <div class="submit_button_class">
-
-              <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent " id="submit_button">
-                Submit
-              </button>
+            <button id="submit_button">Insert Database</button>
             </div>
 
 
@@ -388,6 +393,8 @@
 
 
           </div>
+        </main>
+      </div>
 
 
 
@@ -444,10 +451,7 @@
               <!--<li><a href="#">Privacy and Terms</a></li>-->
             <!--</ul>-->
           <!--</div>-->
-        <!--</footer>-->
-      </div>
-      </main>
-    </div>
+
     </body>
 
 </html>

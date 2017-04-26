@@ -88,30 +88,11 @@ var pricing= {
     }
 
 };
-function insertProduct() {
-    pop('submit Button');
-    // var productName = document.getElementById('pname').value;
-    // var pid = document.getElementById('pid');
-    // var pdesc = document.getElementById('');
-    // var authorName = document.getElementById('');
-    // var bookName = document.getElementById('');
-    // var publiserName  = document.getElementById('');
-    // var baseCategory = document.getElementById('base_category');
 
-    var date = $("#datepicker").datepicker().val();
-    console.log(date);
-    var ISBN  = document.getElementById('');
-    var ISBN13 = document.getElementById('');
-    var DatePublsihed;
-    var MRP  = document.getElementById();
-    var ourPrice = document.getElementById('');
-    var isBestSeller;
-    var isTopRated;
-    var searchTags ;
-    var pricing1 = {
+InsertBook.prototype.insertProduct = function (event) {
 
-    }
-
+    pop(this.productEntitiy.imageURL);
+    this.validateFields();
 
 }
 /**
@@ -312,21 +293,131 @@ function insertProduct() {
 // });
 
 var mSubCat;
-function Start() {
 
 
-    var db = firebase.database();
-    var storage = firebase.storage();
-    console.log('Print Something');
-    setPid(db);
-    var submitButton = document.getElementById('submit_button');
-    submitButton.addEventListener('onclick', insertProduct);
-    var base_category = document.getElementById('base_category');
-    mSubCat = document.getElementById('sub_category');
+InsertBook.prototype.productEntitiy = {
+      imageURL : '',
+       pName:''
+
+};
+InsertBook.prototype.showImageUploadedToast = function () {
+    var data = {
+        message: 'Image Uploaded',
+        timeout: 2000
+    };
+    this.snackBar.MaterialSnackbar.showSnackbar(data);
+};
+
+InsertBook.prototype.showEmptyText =function(text){
+    var data = {
+        message: text,
+        timeout: 2000
+    };
+    this.snackBar.MaterialSnackbar.showSnackbar(data);
+    return;
+};
+
+InsertBook.prototype.saveImage = function (event) {
+    event.preventDefault();
 
 
 
-    // initVariables();
+    var file = event.target.files[0];
+    this.imageForm.reset();
+    if (!file.type.match('image.*')){
+        var data  = {
+            message: 'Upload Only Images',
+            timeout: 2000
+        };
+        this.signInSnackbar.MaterialSnackbar.showSnackbar(data);
+        return;
+
+    }
+    var filePath = 'productImages/books/'+file.name;
+    pop(filePath);
+
+    this.booksRef = this.stroageRef.child(filePath);
+    this.booksRef.put(file)
+        .then(function (snapshot) {
+
+
+
+            this.productEntitiy.imageURL = snapshot.downloadURL;
+            pop('file Inserted');
+            this.showImageUploadedToast();
+
+            // console.log(snapshot.downloadURL);
+            // pop(snapshot.fullpath.toString());
+            // pop(snapshot.key);
+            // var full_path = snapshot.metadata.fullpath;
+            // pop(full_path);
+        }.bind(this));
+
+};
+InsertBook.prototype.checkSetup = function () {
+    if (!window.firebase || !(firebase.app instanceof Function) || !window.config) {
+        window.alert('You have not configured and imported the Firebase SDK. ' +
+            'Make sure you go through the codelab setup instructions.');
+    } else if (config.storageBucket === '') {
+        window.alert('Your Cloud Storage bucket has not been enabled. Sorry about that. This is ' +
+            'actually a Firebase bug that occurs rarely. ' +
+            'Please go and re-generate the Firebase initialisation snippet (step 4 of the codelab) ' +
+            'and make sure the storageBucket attribute is not empty. ' +
+            'You may also need to visit the Storage tab and paste the name of your bucket which is ' +
+            'displayed there.');
+    }
+};
+
+function InsertBook() {
+    this.checkSetup();
+
+
+    //Initialize vDOM Variables
+    this.productName = document.getElementById('pname');
+
+    this.pid = document.getElementById('pid');
+    this.pdesc = document.getElementById('pdesc');
+    this.authorName = document.getElementById('aname');
+    this.bSumm = document.getElementById('bsummary');
+    this.publiserName  = document.getElementById('pubname');
+    this.baseCategory = document.getElementById('base_category');
+
+    this.date = $("#datepicker").datepicker();
+    this.ISBN  = document.getElementById('isbn10');
+    this.ISBN13 = document.getElementById('isbn13');
+
+    this.MRP  = document.getElementById('mrp');
+    this.ourPrice = document.getElementById('our_price');
+    this.isBestSeller  = document.getElementById('best_seller');;
+    this.isTopRated = document.getElementById('top_rate');;
+    this.searchTags = document.getElementById('tags') ;
+
+    //Image Upload Related DoM's
+    this.submitImageButton = document.getElementById('submitImage');
+    this.imageForm = document.getElementById('image-form');
+    this.mediaCapture = document.getElementById('mediaCapture');
+
+    this.snackBar = document.getElementById('must-signin-snackbar');
+
+    this.insetProductutton = document.getElementById('submit_button');
+    this.insetProductutton.addEventListener('click',this.insertProduct.bind(this));
+
+
+    //events for Image pload
+    this.submitImageButton.addEventListener('click',function (e) {
+        e.preventDefault();
+        this.mediaCapture.click();
+    }.bind(this));
+
+    this.mediaCapture.addEventListener('change',this.saveImage.bind(this));
+
+    this.auth = firebase.auth();
+    this.database = firebase.database();
+    this.storage = firebase.storage();
+    this.stroageRef = this.storage.ref();
+
+
+
 
 }
 
@@ -339,6 +430,29 @@ function Start() {
 * */
 
 
+function validateText(text) {
+    pop('validting sub');
+    if (text.length == 0 && text == null){
+        pop('returning false');
+        return false;
+    }
+
+    return true;
+}
+
+
+
+InsertBook.prototype.validateFields  = function (){
+    pop('validating Fields');
+    var pname = this.productName.value;
+        var bool =  validateText(pname);
+    if (!bool) this.showEmptyText('Enter Product Name');
+        //Correct Validateion
+
+
+
+    };
+
 
 function dateSelected(date,ui) {
    pop(date);
@@ -346,12 +460,13 @@ function dateSelected(date,ui) {
 
 function resetSubCategoriesOptions() {
     pop('clearing options');
+    $('#sub_category').empty();
 
-    var mSubCategory = document.getElementById('sub_category');
-    for (var i = 0; i < mSubCategory.length; i++){
-
-       mSubCategory.remove(i);
-    }
+    // var mSubCategory = document.getElementById('sub_category');
+    // for (var i = 0; i < mSubCategory.length; i++){
+    //
+    //    mSubCategory.remove(i);
+    // }
 }
 function populateCompetitiveCateogires() {
 
@@ -401,6 +516,10 @@ var populateStartupBooks = function () {
 var populateCollegeBooks = function () {
 
 };
+
+/** This Method is Directly called from HTML
+ * Which is what experts say so , who cares?
+ * */
 function baseCategorySelected(data){
     var vale = data.value;
     pop(data.value);
@@ -430,8 +549,17 @@ function baseCategorySelected(data){
 
 
 };
+function fileUploaded(event){
+        pop('in Function');
+
+};
+
 
 function popAlert(data) {
     alert(data);
 }
-window.onload = Start();
+
+
+window.onload = function () {
+    window.insertBook = new InsertBook();
+}
