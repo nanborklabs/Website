@@ -11,13 +11,17 @@
 
 
 /*This Method Queries the Database Child Cont and PID is Incremented from Child Value*/
-var setPid = function (db) {
+InsertBook.prototype.setPidToEntity = function (count) {
+    this.productEntitiy.pid = count;
+};
+InsertBook.prototype.setPid = function (db) {
     var rootRef = db.ref();
     var bookRef = db.ref('products/books').orderByKey();
     bookRef.once("value")
         .then(function (snapshot) {
             var count = 0;
-            console.log(snapshot.val());
+            count++;
+
             snapshot.forEach(function (singleData) {
                 // var bookName = singleData.key;
                 // console.log(bookName);
@@ -35,11 +39,12 @@ var setPid = function (db) {
                 count++;
 
 
-            })
+            });
             pop(count);
             var mPid  = document.getElementById('pid_text');
             mPid.value = count;
-            mPid.focus();
+            // this.setPidToEntity(count);
+            // mPid.focus();
         });
 
 };
@@ -302,8 +307,49 @@ var mSubCat;
 InsertBook.prototype.isImageUploded = false;
 
 InsertBook.prototype.productEntitiy = {
+        pid:'',
       imageURL : '',
-       pName:''
+    pName:'',
+    productDescription:'',
+    authorName:'',
+    publisherName:'',
+    MRP : '',
+    isTopRated:'',
+    isBestSeller:'',
+    bookSummary:'',
+    baseCategory:'',
+    subCategory:'',
+    genre:'',
+    tags:{
+      tag1:'fdsaf',
+        tag2:'afssd',
+
+    },
+    details:{
+        ISBN : '',
+        ISBN13:'',
+        ourPrice:''
+    },
+    pricing:{
+        pricing1:{
+            unit:'',
+            timeUnit:'',
+            price:''
+
+        },  pricing2:{
+            unit:'',
+            timeUnit:'',
+            price:''
+
+        },
+        pricing3:{
+            unit:'',
+            timeUnit:'',
+            price:''
+
+        }
+    }
+
 
 };
 InsertBook.prototype.showImageUploadedToast = function () {
@@ -383,7 +429,7 @@ function InsertBook() {
     //Initialize vDOM Variables
     this.productName = document.getElementById('pname');
 
-    this.pid = document.getElementById('pid');
+    this.pid = document.getElementById('pid_text');
     this.pdesc = document.getElementById('pdesc');
     this.authorName = document.getElementById('aname');
     this.bSumm = document.getElementById('bsummary');
@@ -440,6 +486,7 @@ function InsertBook() {
     this.database = firebase.database();
     this.storage = firebase.storage();
     this.stroageRef = this.storage.ref();
+    this.setPid(this.database);
 
 
 
@@ -479,46 +526,114 @@ function validateNumber(munit1) {
 InsertBook.prototype.validateFields  = function (){
     pop('validating Fields');
 
+
+    //Pid
+    var pid = this.pid.value;
     //validating Product Name
+    this.productEntitiy.pid = pid;
     var pname = this.productName.value;
-        if (!validateText(pname)) this.showEmptyText('Enter Product Name');
+        if (!validateText(pname)) {
+            this.showEmptyText('Enter Product Name');
+            return;
+        }
+        else{
+            this.productEntitiy.pName = pname;
+        }
     //product Desc
     var pDesc = this.pdesc.value;
-        if (!validateText(pDesc)) this.showEmptyText('Enter Product Description');
+        if (!validateText(pDesc)) {
+            this.showEmptyText('Enter Product Description');
+            return
+        }
+        else{
+            this.productEntitiy.productDescription = pDesc;
+        }
     //Author Name
     var aName = this.authorName.value;
-        if (!validateText(aName)) this.showEmptyText('Enter Author Name');
+        if (!validateText(aName)) {
+            this.showEmptyText('Enter Author Name');
+            return;
+        }
+        else{
+            this.productEntitiy.authorName  = aName;
+        }
     //Book Summary
     var bSumm  = this.bSumm.value;
-        if (!validateText(bSumm)) this.showEmptyText('Enter Book Summary');
+        if (!validateText(bSumm)){
+            this.showEmptyText('Enter Book Summary');
+            return;
+        }
+        else{
+            this.productEntitiy.bookSummary = bSumm;
+        }
+
 
     //Publisher Name
     var pubName = this.publiserName.value;
-        if (!validateText(pubName)) this.showEmptyText('Enter Publisher Name');
+        if (!validateText(pubName)){
+            this.showEmptyText('Enter Publisher Name');
+            return;
+        }
+        else{
+            this.productEntitiy.publisherName  = pubName;
+        }
     //base Cateogry
     var category = this.baseCategory.options[this.baseCategory.selectedIndex].value;
             if (category == 0){
                 this.showEmptyText('Select a Category');
+                return;
+            }
+            else{
+                this.productEntitiy.baseCategory = category;
             }
 
     // Subcategory
     var subCategory = this.subCateogry.options[this.subCateogry.selectedIndex].value;
        if (subCategory == 0){
            this.showEmptyText('Select a SubCategory');
+           return;
+       }
+       else{
+          this.productEntitiy.subCategory = subCategory;
        }
 
     //ISBN 10
     var ISBN = this.ISBN.value;
-        if (!validateText(ISBN)) this.showEmptyText('Enter ISBN');
+        if (!validateText(ISBN)) {
+            this.showEmptyText('Enter ISBN');
+            return;
+        }
+        else{
+            this.productEntitiy.details.ISBN = ISBN;
+        }
 
     var ISBN13 = this.ISBN13.value;
-        if (!validateText(ISBN13)) this.showEmptyText('Enter ISBN13');
+        if (!validateText(ISBN13)) {
+            this.showEmptyText('Enter ISBN13');
+            return;
+        }
+        else{
+            this.productEntitiy.details.ISBN13 = ISBN13;
+        }
 
     var MRP = this.MRP.value;
-    if (!validateText(MRP)) this.showEmptyText('Enter MRP');
+    if (!validateText(MRP)) {
+        this.showEmptyText('Enter MRP');
+        return;
+    }
+    else{
+        this.productEntitiy.MRP = MRP;
+    }
+
 
     var ourPrice  = this.ourPrice.value;
-    if (!validateText(ourPrice)) this.showEmptyText('Enter Bought Price');
+    if (!validateText(ourPrice)) {
+        this.showEmptyText('Enter Bought Price');
+        return;
+    }
+    else{
+        this.productEntitiy.details.ourPrice = ourPrice;
+    }
 
     if(this.isImageUploded == false){
         this.showEmptyText('Upload image');
@@ -527,50 +642,118 @@ InsertBook.prototype.validateFields  = function (){
 
     var ibs = this.isBestSeller.options[this.isBestSeller.selectedIndex].value;
         if (ibs == 0){
+
                 this.showEmptyText('Choose Whether Best Seller or Not');
+            return;
+        }
+        else{
+            this.productEntitiy.isBestSeller = ibs;
         }
 
     var itr = this.isTopRated.options[this.isTopRated.selectedIndex].value;
         if (itr == 0){
             this.showEmptyText('Select IS Top Rated');
+            return;
+        }
+        else{
+            this.productEntitiy.isTopRated  = itr;
         }
 
+
     var munit1 = this.unit1.value;
-            if (!validateNumber(munit1))  this.showEmptyText('Enter Unit 1');
+            if (!validateNumber(munit1))  {
+                this.showEmptyText('Enter Unit 1');
+                return;
+            }
+            else{
+                this.productEntitiy.pricing.pricing1.unit = munit1;
+            }
     var munit2 = this.unit2.value;
-        if (!validateNumber(munit2))  this.showEmptyText('Enter Unit 1');
+        if (!validateNumber(munit2)){
+            this.showEmptyText('Enter Unit 1');
+            return;
+        }
+
+        else{
+            this.productEntitiy.pricing.pricing2.unit = munit2;
+        }
+
     var munit3 = this.unit3.value;
-    if (!validateNumber(munit3))  this.showEmptyText('Enter Unit 1');
+    if (!validateNumber(munit3)) {
+        this.showEmptyText('Enter Unit 1');
+        return;
+    }
+
+    else{
+        this.productEntitiy.pricing.pricing3.unit = munit3;
+    }
+
 
     var mTU1  =this.tm1.options[this.tm1.selectedIndex].value;
         if (mTU1 == 0){
             this.showEmptyText('Select 1st Time unit');
+            return;
+        }
+        else{
+            this.productEntitiy.pricing.pricing1.timeUnit = mTU1;
         }
     var mTU2  =this.tm2.options[this.tm2.selectedIndex].value;
-        if (mTU1 == 0){
+        if (mTU2 == 0){
             this.showEmptyText('Select 2nd Time unit');
+            return;
+        }
+        else{
+            this.productEntitiy.pricing.pricing2.timeUnit = mTU2;
         }
     var mTU3  =this.tm3.options[this.tm3.selectedIndex].value;
-         if (mTU1 == 0){
+         if (mTU3 == 0){
                 this.showEmptyText('Select 3rd Time unit');
-        }
+             return;
+         }
+         else{
+             this.productEntitiy.pricing.pricing3.timeUnit = mTU3;
+         }
     var price1 = this.price1.value;
         if (!validateNumber(price1)){
             this.showEmptyText('Enter PRice 1');
+            return;
+        }
+        else{
+            this.productEntitiy.pricing.pricing1.price = price1;
         }
 
     var price2 = this.price2.value;
         if (!validateNumber(price2)){
             this.showEmptyText('Enter PRice 2');
+            return;
         }
-
+        else{
+            this.productEntitiy.pricing.pricing2.price = price2;
+        }
     var price3 = this.price3.value;
         if (!validateNumber(price3)){
             this.showEmptyText('Enter PRice 2');
+            return;
+        }
+        else{
+            this.productEntitiy.pricing.pricing3.price = price3;
         }
 
 
 
+        if (this.isImageUploded == false){
+            return;
+        }
+
+        //Product Entity Has Been Constructed Push to Database
+
+        var databasePath = 'products/books/'+this.productEntitiy.pid;
+        pop(databasePath);
+        this.database.ref(databasePath)
+            .push(this.productEntitiy)
+            .then(function (snapshot) {
+               pop(snapshot);
+            });
 
 
 
