@@ -15,12 +15,14 @@ InsertBook.prototype.setPidToEntity = function (count) {
     this.productEntitiy.pid = count;
 };
 InsertBook.prototype.setPid = function (db) {
+
     var rootRef = db.ref();
-    var bookRef = db.ref('products/books').orderByKey();
+    var bookRef = db.ref('products/books/');
+    var count =0;
+    count++;
+    pop('loading');
     bookRef.once("value")
         .then(function (snapshot) {
-            var count = 0;
-            count++;
 
             snapshot.forEach(function (singleData) {
                 // var bookName = singleData.key;
@@ -37,6 +39,8 @@ InsertBook.prototype.setPid = function (db) {
                 //
                 // console.log(bName);
                 count++;
+
+
 
 
             });
@@ -422,9 +426,37 @@ InsertBook.prototype.checkSetup = function () {
     }
 };
 
-function InsertBook() {
-    this.checkSetup();
+InsertBook.prototype.isSignedIn = function () {
 
+
+    pop('checking Login');
+    firebase.auth().onAuthStateChanged(function(user) {
+
+        if (user) {
+            // User is signed in.
+
+                pop('user Signed In');
+
+
+
+        } else {
+            // User is signed out.
+            pop('user Signed Out');
+            window.location.href = './Login.html';
+
+
+        }
+
+    });
+
+};
+function InsertBook() {
+
+    this.checkSetup();
+    this.isSignedIn();
+
+
+    pop('insided');
 
     //Initialize vDOM Variables
     this.productName = document.getElementById('pname');
@@ -483,6 +515,7 @@ function InsertBook() {
     this.price3 = document.getElementById('price_three_text');
 
     this.auth = firebase.auth();
+
     this.database = firebase.database();
     this.storage = firebase.storage();
     this.stroageRef = this.storage.ref();
@@ -752,7 +785,9 @@ InsertBook.prototype.validateFields  = function (){
         this.database.ref(databasePath)
             .push(this.productEntitiy)
             .then(function (snapshot) {
-               pop(snapshot);
+               alert('Book inserted SuccessFully');
+                this.resetEverything();
+
             });
 
 
@@ -764,6 +799,35 @@ InsertBook.prototype.validateFields  = function (){
 
 };
 
+
+
+InsertBook.prototype.clearFields = function () {
+
+    this.pid.value = '';
+    this.productName.value= '';
+    this.publiserName.value = '';
+    this.ISBN.value = '';
+    this.ISBN13.value = '';
+    this.authorName.value = '';
+    this.MRP.value = '';
+    this.ourPrice.value = '';
+    this.pdesc.value = '';
+    this.unit1.value = '';
+    this.unit2.value = '';
+    this.unit3.value = '';
+
+    this.price1.value = '';
+    this.price2.value = '';
+    this.price3.value = '';
+
+    this.searchTags.value = '';
+
+
+};
+InsertBook.prototype.resetEverything = function () {
+    this.clearFields();
+    this.setPid(this.database);
+}
 
 function dateSelected(date,ui) {
    pop(date);

@@ -7,8 +7,16 @@
     "rewrites": [
       {
         "source": "**",
-        "destination": "/index.html"
+        "destination": "/indext.html"
+
+
       }
-    ]
+
+    ],
+    "redirects": [ {
+      "source" : "/",
+      "destination" : "/Login.html",
+      "type" : 302
+    }]
   }
 }
