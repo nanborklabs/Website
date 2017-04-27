@@ -16,6 +16,23 @@ InsertBook.prototype.setPidToEntity = function (count) {
 };
 InsertBook.prototype.setPid = function (db) {
 
+
+
+
+    var booksRef = db.ref('/products/books');
+    booksRef.orderByChild("MRP").on("child_added", function(snapshot) {
+        var dinoName = snapshot.key;
+        var dinoData = snapshot.value;
+       // pop(dinoData);
+
+        var prodcuctsRef = db.ref('products/books/'+dinoName);
+        prodcuctsRef.orderByChild("MPR").on("child_added", function(snapshot) {
+              pop(snapshot);
+        });
+    });
+
+
+    /*
     var rootRef = db.ref();
     var bookRef = db.ref('products/books/');
     var count =0;
@@ -50,7 +67,7 @@ InsertBook.prototype.setPid = function (db) {
             // this.setPidToEntity(count);
             // mPid.focus();
         });
-
+*/
 };
 
 function pop(data) {
