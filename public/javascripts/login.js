@@ -34,6 +34,7 @@ Login.prototype.doLogin = function () {
           console.log('Not Logged In');
         var errorCode = error.code;
 
+
         var errorMessage = error.message;
             console.log(errorMessage);
         // ...

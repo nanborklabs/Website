@@ -62,7 +62,7 @@
         <div class="mdl-layout__tab-bar mdl-js-ripple-effect mdl-color--primary-dark">
           <a href="#overview" class="mdl-layout__tab is-active">DashBoard</a>
           <a href="#addBook" class="mdl-layout__tab">Add Book</a>
-          <a href="#features" class="mdl-layout__tab">Create Combo</a>
+          <a href="#Search" class="mdl-layout__tab">Search</a>
           <a href="#features" class="mdl-layout__tab">Edit Book</a>
           <a href="#features" class="mdl-layout__tab">Edit Combo</a>
 
@@ -70,7 +70,7 @@
         </div>
       </header>
 
-      <!--The Content of Tabs here-->
+      <!--Mai Root , Holding Tabs , Kinda viewpager -->
       <main class="mdl-layout__content">
         <div id="must-signin-snackbar" class="mdl-js-snackbar mdl-snackbar">
           <div class="mdl-snackbar__text"></div>
@@ -79,7 +79,8 @@
 
 
 
-        <!--The OVerview Content-->
+        <!--Whole Tab COntent Here eveything under Div id-->
+        <!--1st Child  OverView Tab-->
         <div class="mdl-layout__tab-panel is-active" id="overview">
 
           <!--The Dahs Board Section-->
@@ -137,7 +138,7 @@
 
         </div>
 
-        <!--The addd Book Content-->
+        <!--2nd Tab Adding Books-->
         <div class="mdl-layout__tab-panel add_book_root" id="addBook">
 
 
@@ -393,6 +394,27 @@
 
 
           </div>
+        <!--3rd  Tab Searching Tabs-->
+        <div class="mdl-layout__tab-panel search_root" id="Search">
+
+          <div class="search_top_contaier">
+
+              <h5 class="Search">Search By Name, Tags</h5>
+              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label SearchRootEditBox">
+                <input class="mdl-textfield__input" type="text" id="search_editbox" pattern="[A-Z,a-z, ]*">
+                <label class="mdl-textfield__label" for="search_editbox">Search By  Name,Tags</label>
+              </div>
+              <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent SearchButton" id="search_button">
+                Search
+              </button>
+
+           </div>
+          </div>
+
+          <
+
+
+        </div>
         </main>
       </div>
 

@@ -70,6 +70,11 @@ InsertBook.prototype.setPid = function (db) {
 */
 };
 
+
+
+/*This is Function which prints the log,
+* send only Variables and products
+* */
 function pop(data) {
 
     console.log(data);
@@ -120,7 +125,7 @@ var pricing= {
 
 
 InsertBook.prototype.insertProduct = function (event) {
-
+    this.insetProductutton.setAttribute('hidden', 'true');
     pop(this.productEntitiy.imageURL);
     this.validateFields();
 
@@ -429,6 +434,7 @@ InsertBook.prototype.saveImage = function (event) {
         }.bind(this));
 
 };
+
 InsertBook.prototype.checkSetup = function () {
     if (!window.firebase || !(firebase.app instanceof Function) || !window.config) {
         window.alert('You have not configured and imported the Firebase SDK. ' +
@@ -798,14 +804,19 @@ InsertBook.prototype.validateFields  = function (){
         //Product Entity Has Been Constructed Push to Database
 
         var databasePath = 'products/books/'+this.productEntitiy.pid;
-        pop(databasePath);
-        this.database.ref(databasePath)
+
+        this.database.ref().child(databasePath)
             .push(this.productEntitiy)
             .then(function (snapshot) {
                alert('Book inserted SuccessFully');
+                this.insetProductutton.removeAttribute('hidden');
                 this.resetEverything();
 
-            });
+            })
+            .catch(function (event) {
+                pop(event);
+            })
+        ;
 
 
 
@@ -820,6 +831,8 @@ InsertBook.prototype.validateFields  = function (){
 
 InsertBook.prototype.clearFields = function () {
 
+
+    pop('clearing Fields');
     this.pid.value = '';
     this.productName.value= '';
     this.publiserName.value = '';
