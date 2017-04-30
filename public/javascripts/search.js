@@ -73,6 +73,7 @@ SearchBook.prototype.searchProduct = function (data) {
 
     pop(data);
     this.mSearchQueryText = this.editbox.value;
+
     pop(this.mSearchQueryText);
 
     //Do Elastic Search Here
