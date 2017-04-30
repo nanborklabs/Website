@@ -54,6 +54,7 @@ SearchBook.prototype.isSignedIn = function () {
 };
 
 
+
 SearchBook.prototype.checkSetup = function () {
     if (!window.firebase || !(firebase.app instanceof Function) || !window.config) {
         window.alert('You have not configured and imported the Firebase SDK. ' +
