@@ -9,6 +9,8 @@
     <script src="https://www.gstatic.com/firebasejs/3.8.0/firebase.js"></script>
     <script>
       // Initialize Firebase
+
+
       var config = {
         apiKey: "AIzaSyBmzpyzpmeiP2k70DAV040NUxKwFZJHaK8",
         authDomain: "replay-inventory-platform.firebaseapp.com",
@@ -18,17 +20,20 @@
         messagingSenderId: "287811828458"
       };
       firebase.initializeApp(config);
+
     </script>
     <!-- initialize the SDK after all desired features are loaded -->
 
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="/resources/demos/style.css">
+    <!--<link rel="stylesheet" href="/resources/demos/style.css">-->
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <!--<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">-->
     <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.blue-light_blue.min.css" />
     <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
-    <script src="javascripts/main.js"></script>
+
+
+    <!--<script src="javascripts/search.js"></script>-->
     <script>
 
       $( function() {
@@ -60,7 +65,7 @@
         </div>
         <!-- The Href Should point to the Id of Div below Each tab Must Have Differet div and Diffrenrt Id-->
         <div class="mdl-layout__tab-bar mdl-js-ripple-effect mdl-color--primary-dark">
-          <a href="#overview" class="mdl-layout__tab is-active">DashBoard</a>
+          <a href="#overview" class="mdl-layout__tab is-active">Admin</a>
           <a href="#addBook" class="mdl-layout__tab">Add Book</a>
           <a href="#Search" class="mdl-layout__tab">Search</a>
           <a href="#features" class="mdl-layout__tab">Edit Book</a>
@@ -411,10 +416,10 @@
            </div>
           </div>
 
-          <
 
 
-        </div>
+
+
         </main>
       </div>
 
@@ -475,5 +480,7 @@
           <!--</div>-->
 
     </body>
+
+  <script src="./javascripts/main.js"></script>
 
 </html>

@@ -11,28 +11,18 @@
 
 
 /*This Method Queries the Database Child Cont and PID is Incremented from Child Value*/
-InsertBook.prototype.setPidToEntity = function (count) {
+AdminManager.prototype.setPidToEntity = function (count) {
     this.productEntitiy.pid = count;
 };
-InsertBook.prototype.setPid = function (db) {
+AdminManager.prototype.setPid = function (db) {
 
 
 
 
-    var booksRef = db.ref('/products/books');
-    booksRef.orderByChild("MRP").on("child_added", function(snapshot) {
-        var dinoName = snapshot.key;
-        var dinoData = snapshot.value;
-       // pop(dinoData);
-
-        var prodcuctsRef = db.ref('products/books/'+dinoName);
-        prodcuctsRef.orderByChild("MPR").on("child_added", function(snapshot) {
-              pop(snapshot);
-        });
-    });
+    pop('set PId Method');
 
 
-    /*
+
     var rootRef = db.ref();
     var bookRef = db.ref('products/books/');
     var count =0;
@@ -67,7 +57,7 @@ InsertBook.prototype.setPid = function (db) {
             // this.setPidToEntity(count);
             // mPid.focus();
         });
-*/
+
 };
 
 
@@ -124,8 +114,10 @@ var pricing= {
 
 
 
-InsertBook.prototype.insertProduct = function (event) {
-    this.insetProductutton.setAttribute('hidden', 'true');
+
+
+AdminManager.prototype.insertProduct = function (event) {
+
     pop(this.productEntitiy.imageURL);
     this.validateFields();
 
@@ -330,10 +322,13 @@ InsertBook.prototype.insertProduct = function (event) {
 var mSubCat;
 
 
-InsertBook.prototype.isImageUploded = false;
+AdminManager.prototype.isImageUploded = false;
 
-InsertBook.prototype.productEntitiy = {
-        pid:'',
+
+
+AdminManager.prototype.matched_PID_Array = [];
+AdminManager.prototype.productEntitiy = {
+    pid:'',
       imageURL : '',
     pName:'',
     productDescription:'',
@@ -346,6 +341,8 @@ InsertBook.prototype.productEntitiy = {
     baseCategory:'',
     subCategory:'',
     genre:'',
+    //todo add quantity
+    quantity : '',
     tags:{
       tag1:'fdsaf',
         tag2:'afssd',
@@ -378,7 +375,7 @@ InsertBook.prototype.productEntitiy = {
 
 
 };
-InsertBook.prototype.showImageUploadedToast = function () {
+AdminManager.prototype.showImageUploadedToast = function () {
     var data = {
         message: 'Image Uploaded',
         timeout: 2000
@@ -386,7 +383,7 @@ InsertBook.prototype.showImageUploadedToast = function () {
     this.snackBar.MaterialSnackbar.showSnackbar(data);
 };
 
-InsertBook.prototype.showEmptyText =function(text){
+AdminManager.prototype.showEmptyText =function(text){
     var data = {
         message: text,
         timeout: 2000
@@ -395,9 +392,8 @@ InsertBook.prototype.showEmptyText =function(text){
     return;
 };
 
-InsertBook.prototype.saveImage = function (event) {
+AdminManager.prototype.saveImage = function (event) {
     event.preventDefault();
-
 
 
     var file = event.target.files[0];
@@ -435,7 +431,7 @@ InsertBook.prototype.saveImage = function (event) {
 
 };
 
-InsertBook.prototype.checkSetup = function () {
+AdminManager.prototype.checkSetup = function () {
     if (!window.firebase || !(firebase.app instanceof Function) || !window.config) {
         window.alert('You have not configured and imported the Firebase SDK. ' +
             'Make sure you go through the codelab setup instructions.');
@@ -449,37 +445,39 @@ InsertBook.prototype.checkSetup = function () {
     }
 };
 
-InsertBook.prototype.isSignedIn = function () {
+AdminManager.prototype.isSignedIn = function () {
 
 
     pop('checking Login');
-    firebase.auth().onAuthStateChanged(function(user) {
-
-        if (user) {
-            // User is signed in.
-
-                pop('user Signed In');
-
-
-
-        } else {
-            // User is signed out.
-            pop('user Signed Out');
-            window.location.href = './Login.html';
-
-
-        }
-
-    });
+    // firebase.auth().onAuthStateChanged(function(user) {
+    //
+    //     if (user) {
+    //         // User is signed in.
+    //
+    //             pop('user Signed In- Main Page');
+    //
+    //
+    //
+    //
+    //     } else {
+    //         // User is signed out.
+    //         pop('user Signed Out');
+    //         window.location.href = './Login.html';
+    //
+    //
+    //     }
+    //
+    // });
 
 };
-function InsertBook() {
+function AdminManager() {
 
     this.checkSetup();
-    this.isSignedIn();
+    // this.isSignedIn();
 
 
-    pop('insided');
+
+    pop('Initializing Variables');
 
     //Initialize vDOM Variables
     this.productName = document.getElementById('pname');
@@ -547,8 +545,93 @@ function InsertBook() {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//    Search Functionality
+    pop('Search initliazed');
+    this.editbox = document.getElementById('search_editbox');
+    this.searchButton = document.getElementById('search_button');
+    this.searchButton.addEventListener('click',this.searchProduct.bind(this));
+
+
+
 }
 
+
+
+
+window.pids = [];
+
+
+/*The Produccts Which Mathces the Search Come HEre*/
+function showProduct(pid) {
+
+}
+AdminManager.prototype.searchProduct = function (data) {
+
+
+
+
+
+    var mSearchQueryText = this.editbox.value;
+
+    pop(mSearchQueryText);
+
+    //Do Elastic Search Here
+    //Get the Resuls back
+    //Display Custom List
+
+    var bookRefs = this.database.ref('products/books/');
+
+    pop('Loading Child');
+    //Strings(pName) are matched, if Hit
+    // Push it window.pid(Array)
+    bookRefs.on("child_added", function(snapshot, prevChildKey) {
+
+        //Get Te Single Child
+        var singleBook = snapshot.val();
+        //If matching occurs, get The Job Done
+
+        if (singleBook.pName.includes(mSearchQueryText)) {
+
+            // Names Match
+            // Push to Pid Array
+            window.pids.push(singleBook.pid);
+            showProduct(singleBook.pid);
+        }
+
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
 
 /*The Base Category Event Listener
 * if
@@ -557,6 +640,37 @@ function InsertBook() {
 * fill Sub catgory according to Genre
 * */
 
+              AdminManager.SEARCH_ITEM =  '<div class="mdl-card mdl-shadow--8dp">'+
+
+                                                //The Product Title
+                                                '<div class = "mdl-card__title">' +
+                                                    '<span id="s_item_span_pName">Product Name</span>' +
+                                                '</div>'+
+                                                //The Product Id
+                                                '<span id="s_item_span_pid"> Pid</span>'+
+                                                //Product Image
+                                                '<span id="s_item_p_count"></span>'+
+
+
+                                             '</div>';
+
+
+
+
+
+
+
+
+
+
+function showInsertButton() {
+    this.insetProductutton.setAttribute('hidden', 'false');
+
+}
+
+function HideInsertButton() {
+    this.insetProductutton.setAttribute('hidden', 'true');
+}
 
 function validateText(text) {
     pop(text);
@@ -579,7 +693,7 @@ function validateNumber(munit1) {
         return true;
     }
 }
-InsertBook.prototype.validateFields  = function (){
+AdminManager.prototype.validateFields  = function (){
     pop('validating Fields');
 
 
@@ -590,6 +704,7 @@ InsertBook.prototype.validateFields  = function (){
     var pname = this.productName.value;
         if (!validateText(pname)) {
             this.showEmptyText('Enter Product Name');
+            showInsertButton();
             return;
         }
         else{
@@ -599,6 +714,7 @@ InsertBook.prototype.validateFields  = function (){
     var pDesc = this.pdesc.value;
         if (!validateText(pDesc)) {
             this.showEmptyText('Enter Product Description');
+            showInsertButton();
             return
         }
         else{
@@ -608,6 +724,7 @@ InsertBook.prototype.validateFields  = function (){
     var aName = this.authorName.value;
         if (!validateText(aName)) {
             this.showEmptyText('Enter Author Name');
+            showInsertButton();
             return;
         }
         else{
@@ -617,6 +734,7 @@ InsertBook.prototype.validateFields  = function (){
     var bSumm  = this.bSumm.value;
         if (!validateText(bSumm)){
             this.showEmptyText('Enter Book Summary');
+            showInsertButton();
             return;
         }
         else{
@@ -628,6 +746,7 @@ InsertBook.prototype.validateFields  = function (){
     var pubName = this.publiserName.value;
         if (!validateText(pubName)){
             this.showEmptyText('Enter Publisher Name');
+            showInsertButton();
             return;
         }
         else{
@@ -637,6 +756,7 @@ InsertBook.prototype.validateFields  = function (){
     var category = this.baseCategory.options[this.baseCategory.selectedIndex].value;
             if (category == 0){
                 this.showEmptyText('Select a Category');
+                showInsertButton();
                 return;
             }
             else{
@@ -647,6 +767,7 @@ InsertBook.prototype.validateFields  = function (){
     var subCategory = this.subCateogry.options[this.subCateogry.selectedIndex].value;
        if (subCategory == 0){
            this.showEmptyText('Select a SubCategory');
+           showInsertButton();
            return;
        }
        else{
@@ -657,6 +778,7 @@ InsertBook.prototype.validateFields  = function (){
     var ISBN = this.ISBN.value;
         if (!validateText(ISBN)) {
             this.showEmptyText('Enter ISBN');
+            showInsertButton();
             return;
         }
         else{
@@ -666,6 +788,7 @@ InsertBook.prototype.validateFields  = function (){
     var ISBN13 = this.ISBN13.value;
         if (!validateText(ISBN13)) {
             this.showEmptyText('Enter ISBN13');
+            showInsertButton();
             return;
         }
         else{
@@ -675,6 +798,7 @@ InsertBook.prototype.validateFields  = function (){
     var MRP = this.MRP.value;
     if (!validateText(MRP)) {
         this.showEmptyText('Enter MRP');
+        showInsertButton();
         return;
     }
     else{
@@ -685,6 +809,7 @@ InsertBook.prototype.validateFields  = function (){
     var ourPrice  = this.ourPrice.value;
     if (!validateText(ourPrice)) {
         this.showEmptyText('Enter Bought Price');
+        showInsertButton();
         return;
     }
     else{
@@ -693,6 +818,7 @@ InsertBook.prototype.validateFields  = function (){
 
     if(this.isImageUploded == false){
         this.showEmptyText('Upload image');
+        showInsertButton();
 
     }
 
@@ -700,6 +826,7 @@ InsertBook.prototype.validateFields  = function (){
         if (ibs == 0){
 
                 this.showEmptyText('Choose Whether Best Seller or Not');
+            showInsertButton();
             return;
         }
         else{
@@ -709,6 +836,7 @@ InsertBook.prototype.validateFields  = function (){
     var itr = this.isTopRated.options[this.isTopRated.selectedIndex].value;
         if (itr == 0){
             this.showEmptyText('Select IS Top Rated');
+            showInsertButton();
             return;
         }
         else{
@@ -719,6 +847,7 @@ InsertBook.prototype.validateFields  = function (){
     var munit1 = this.unit1.value;
             if (!validateNumber(munit1))  {
                 this.showEmptyText('Enter Unit 1');
+                showInsertButton();
                 return;
             }
             else{
@@ -727,6 +856,7 @@ InsertBook.prototype.validateFields  = function (){
     var munit2 = this.unit2.value;
         if (!validateNumber(munit2)){
             this.showEmptyText('Enter Unit 1');
+            showInsertButton();
             return;
         }
 
@@ -737,6 +867,7 @@ InsertBook.prototype.validateFields  = function (){
     var munit3 = this.unit3.value;
     if (!validateNumber(munit3)) {
         this.showEmptyText('Enter Unit 1');
+        showInsertButton();
         return;
     }
 
@@ -748,6 +879,7 @@ InsertBook.prototype.validateFields  = function (){
     var mTU1  =this.tm1.options[this.tm1.selectedIndex].value;
         if (mTU1 == 0){
             this.showEmptyText('Select 1st Time unit');
+            showInsertButton();
             return;
         }
         else{
@@ -756,6 +888,7 @@ InsertBook.prototype.validateFields  = function (){
     var mTU2  =this.tm2.options[this.tm2.selectedIndex].value;
         if (mTU2 == 0){
             this.showEmptyText('Select 2nd Time unit');
+            showInsertButton();
             return;
         }
         else{
@@ -764,6 +897,7 @@ InsertBook.prototype.validateFields  = function (){
     var mTU3  =this.tm3.options[this.tm3.selectedIndex].value;
          if (mTU3 == 0){
                 this.showEmptyText('Select 3rd Time unit');
+             showInsertButton();
              return;
          }
          else{
@@ -772,6 +906,7 @@ InsertBook.prototype.validateFields  = function (){
     var price1 = this.price1.value;
         if (!validateNumber(price1)){
             this.showEmptyText('Enter PRice 1');
+            showInsertButton();
             return;
         }
         else{
@@ -781,6 +916,7 @@ InsertBook.prototype.validateFields  = function (){
     var price2 = this.price2.value;
         if (!validateNumber(price2)){
             this.showEmptyText('Enter PRice 2');
+            showInsertButton();
             return;
         }
         else{
@@ -789,6 +925,7 @@ InsertBook.prototype.validateFields  = function (){
     var price3 = this.price3.value;
         if (!validateNumber(price3)){
             this.showEmptyText('Enter PRice 2');
+            showInsertButton();
             return;
         }
         else{
@@ -798,22 +935,25 @@ InsertBook.prototype.validateFields  = function (){
 
 
         if (this.isImageUploded == false){
+            this.showEmptyText('Upload a Image and Insert');
+            showInsertButton();
             return;
         }
 
         //Product Entity Has Been Constructed Push to Database
 
-        var databasePath = 'products/books/'+this.productEntitiy.pid;
 
-        this.database.ref().child(databasePath)
+        this.database.ref().child("/products/books/")
             .push(this.productEntitiy)
             .then(function (snapshot) {
-               alert('Book inserted SuccessFully');
-                this.insetProductutton.removeAttribute('hidden');
-                this.resetEverything();
 
+                // this.insetProductutton.removeAttribute('hidden');
+                // this.resetEverything();
+                    pop('Inserted Successfully ');
+                pop(snapshot.data);
             })
             .catch(function (event) {
+                pop('Error in Inserting');
                 pop(event);
             })
         ;
@@ -829,7 +969,7 @@ InsertBook.prototype.validateFields  = function (){
 
 
 
-InsertBook.prototype.clearFields = function () {
+AdminManager.prototype.clearFields = function () {
 
 
     pop('clearing Fields');
@@ -854,7 +994,7 @@ InsertBook.prototype.clearFields = function () {
 
 
 };
-InsertBook.prototype.resetEverything = function () {
+AdminManager.prototype.resetEverything = function () {
     this.clearFields();
     this.setPid(this.database);
 }
@@ -965,6 +1105,7 @@ function popAlert(data) {
 }
 
 
-window.onload = function () {
-    window.insertBook = new InsertBook();
-}
+$(window).load(function (e) {
+    console.log('Admin Manager');
+    window.Admin = new AdminManager();
+});

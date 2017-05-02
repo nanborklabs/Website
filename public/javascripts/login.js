@@ -5,6 +5,8 @@
 
 
 function Login() {
+
+
         this.checkSetup();
         this.email = document.getElementById('email');
         this.password = document.getElementById('password');
@@ -72,6 +74,7 @@ Login.prototype.checkSigin = function () {
 
 }
 window.onload = function () {
+    console.log('Insdide Login Function');
     window.login = new Login();
 }
 
