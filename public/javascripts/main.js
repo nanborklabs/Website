@@ -16,12 +16,7 @@ AdminManager.prototype.setPidToEntity = function (count) {
 };
 AdminManager.prototype.setPid = function (db) {
 
-
-
-
     pop('set PId Method');
-
-
 
     var rootRef = db.ref();
     var bookRef = db.ref('products/books/');
@@ -33,24 +28,9 @@ AdminManager.prototype.setPid = function (db) {
 
             snapshot.forEach(function (singleData) {
                 // var bookName = singleData.key;
-                // console.log(bookName);
-                //
-                // var bName = singleData.val().productInfo;
-                // var details = singleData.val().details;
-                //
-                // pop(details);
-                //
-                // var ISBN = details.bookCategory;
-                //
-                // console.log(ISBN);
-                //
-                // console.log(bName);
                 count++;
+           });
 
-
-
-
-            });
             pop(count);
             var mPid  = document.getElementById('pid_text');
             mPid.value = count;
@@ -63,20 +43,13 @@ AdminManager.prototype.setPid = function (db) {
 
 
 /*This is Function which prints the log,
-* send only Variables and products
+* send only Variables and Strings
 * */
 function pop(data) {
 
     console.log(data);
 
 }
-
-
-/*This Method Initializees all the Variables and chekc for Empty Strings
-
-*
-*
-* */
 
 
 var pricing= {
@@ -111,11 +84,7 @@ var pricing= {
     }
 
 };
-
-
-
-
-
+u6
 AdminManager.prototype.insertProduct = function (event) {
 
     pop(this.productEntitiy.imageURL);
@@ -125,200 +94,6 @@ AdminManager.prototype.insertProduct = function (event) {
 /**
  * Created by nandhu on 25/4/17.
  */
-// $(function(){
-//
-//     // empty array - square brace for array the reason for variable "DATA" we gonna ask firebase to let us know if it is any extra information or changes
-//     var data=[];
-//
-//
-//     /////////FIREBASE !!!!!!!!!!
-//
-//     ////CREATE FIREBASE CONNECTION
-//     var ref = new Firebase('https://replay-inventory-platform.firebaseio.com/');
-//     var booksRef = new Firebase('https://replay-inventory-platform.firebaseio.com/products/books');
-//     console.log("page is ready");
-//   /*  /// listen the data from our firebase "function(snapshot)" here our call back function, snapshot is incapsulation of our data
-//     ref.on("value",function(snapshot){
-//         // we get all info thanks to val from snapshot
-//         console.log( snapshot.val() );
-//
-//
-//         data=snapshot.val();
-//
-//     })
-//
-//
-//
-//     //// jquaery selector and .submit instead of a click because we want to submit some information
-//     $('#newActivity').submit(function(event){
-//
-//         var $form = $(this);
-//
-//         // disable Submit button
-//         // prop = properties of a form and one of the properties is disable
-//
-//         $form.find("#saveForm").prop('disabled',true);
-//
-//         /// getting  ( not setting the value property)the value of the title VAL
-//         var titleToSend = $('#activityTitle').val();
-//         // VALIDATION
-//         if(titleToSend.length<1) {
-//             alert("This is not valid title:" +titleToSend);
-//         }
-//         console.log("TITLE IS" + titleToSend);
-//
-//         // get the value of description
-//         var descriptionToSend = $('#activityDescription').val();
-//         console.log("Description is" + descriptionToSend);
-//         // get value of dropdown list
-//         var categoryToSend = $ ('#activityCategory').val();
-//         console.log ('Category is '+categoryToSend);
-//
-//
-//         var newActivity = {
-//             "title": titleToSend,
-//             "description": descriptionToSend,
-//             "type":categoryToSend
-//         }
-//         // we put in empty array our information from form
-//         data.push(newActivity);
-//         console.log("DATA!!!!!!!");
-//         console.log(data);
-//         ref.set(data, function(err){
-//             if(err){
-//                 alert("Your activity was not entered, please contact admin");
-//             } else {
-//                 alert ("Your activity is submitted");
-//                 $form.find("#saveForm").prop('disabled', false);
-//                 $('#activityTitle').val('');
-//                 $('#activityDescription').val('');
-//             }
-//         });
-//
-//         return false;
-//     })
-//
-//
-//
-//     //////////////////// registration stuff/////////////////////
-//     $('#login').submit(function(event){
-//
-//         /// disable register button
-//         var $form = $(this);
-//
-//         // disable Submit button
-//         // prop = properties of a form and one of the properties is disable
-//
-//         $form.find("#registerForm").prop('disabled', true);
-//         var email = $form.find("#loginInput").val();
-//         var pw = $form.find("#pwField").val();
-//         register(email,pw);
-//         return false;
-//     });// end of register submit
-//
-//
-//
-//     $('#finallogin').submit(function(event) {
-//
-//         var $form = $(this);
-//         $form.find('#finalloginForm').prop('disabled', true);
-//
-//         ////get the values for login and pasword textboxes
-//         var loginEmail = $('#finalloginInput').val();
-//         var pw = $('#finalpwField').val();
-//
-//         console.log(loginEmail, pw);
-//
-//         login(loginEmail,pw);
-//
-//         return false;
-//
-//     });
-//
-//     //// logout cick handler button
-//     $('#logout').click(function(event){
-//
-//         console.log("going to logout!");
-//         logout();
-//     })
-//
-//
-//     //////////log out from firebase registry////////
-//     function logout(){
-//         var reg = new Firebase ("https://firstaccount.firebaseio.com");
-//
-//         reg.unauth();
-//     }
-//     function login(email, password) {
-//         console.log("Registering with"+email+"  "+password);
-//         var reg = new Firebase ("https://firstaccount.firebaseio.com");
-//
-//         reg.authWithPassword({
-//             email: email,
-//             password: password
-//         }, function(error, user){
-//             if(error){
-//                 console.log(error);
-//                 if(error.code == "INVALID_USER"){
-//                     alert("Not a valid login")
-//                 }
-//                 if(error.code == "INVALID_PASSWORD"){
-//                     alert("Not a valid password");
-//                 }
-//                 alert(error.message);
-//
-//             }else{
-//                 alert("Logged in with "+user.uid);
-//             }
-//         })
-//
-//     }
-//
-//
-//
-//
-//     ////// register a new user in the firebase///////////////
-//
-//     function register(email, password){
-//         console.log("In da club");
-//         //  console.log(email,password);
-//         var reg = new Firebase ("https://firstaccount.firebaseio.com");
-//         reg.createUser ({
-//             email: email,
-//             password: password
-//
-//         }, function(error, userData) {
-//             if (error) {
-//                 if(error.code)
-//                     alert ("some kind error");
-//             } else {
-//                 alert ("you registered"+ userData.uid);
-//             }
-//         })
-//
-//
-//     }
-//
-//     /////// Detect the authication state
-//     var reg = new Firebase("https://firstaccount.firebaseio.com");
-//     reg.onAuth(function(authData){
-//         console.log("info on authentication");
-//         if(authData){
-//             // you are logged in
-//             console.log("you are logged in");
-//             $('#left').css('margin-left', '0px');
-//         }else {
-//             //you are not logged in
-//             console.log("you are not logged in");
-//             $('#left').css('margin-left', '-500px');
-//         }
-//     })
-//
-//
-//
-// */
-// });
-
 var mSubCat;
 
 
@@ -372,8 +147,6 @@ AdminManager.prototype.productEntitiy = {
 
         }
     }
-
-
 };
 AdminManager.prototype.showImageUploadedToast = function () {
     var data = {
@@ -428,7 +201,6 @@ AdminManager.prototype.saveImage = function (event) {
             // var full_path = snapshot.metadata.fullpath;
             // pop(full_path);
         }.bind(this));
-
 };
 
 AdminManager.prototype.checkSetup = function () {
@@ -448,25 +220,25 @@ AdminManager.prototype.checkSetup = function () {
 AdminManager.prototype.isSignedIn = function () {
 
 
-    pop('checking Login');
+    // pop('checking Login'); todo:add 0Login Here
     // firebase.auth().onAuthStateChanged(function(user) {
-    //
+    
     //     if (user) {
     //         // User is signed in.
-    //
+    
     //             pop('user Signed In- Main Page');
-    //
-    //
-    //
-    //
+    
+    
+    
+    
     //     } else {
     //         // User is signed out.
     //         pop('user Signed Out');
     //         window.location.href = './Login.html';
-    //
-    //
+    
+    
     //     }
-    //
+    
     // });
 
 };
@@ -564,7 +336,7 @@ function AdminManager() {
     this.editbox = document.getElementById('search_editbox');
     this.searchButton = document.getElementById('search_button');
     this.searchButton.addEventListener('click',this.searchProduct.bind(this));
-
+    this.lists = document.getElementById('lists1');
 
 
 }
@@ -576,11 +348,42 @@ window.pids = [];
 
 
 /*The Produccts Which Mathces the Search Come HEre*/
-function showProduct(pid) {
+AdminManager.prototype.showProduct =  function (imageUrl,productName,pid,MRP,desc) {
+                pop('showing  product');
+
+              var div = document.getElementById(pid);
+               // If that Pid does not Exists a.ka. Created , then Show it
+               if (!div) {
+                 var container = document.createElement('div');
+                 container.innerHTML = AdminManager.SEARCH_ITEM;
+                   div = container.firstChild;
+                 div.setAttribute('id', pid);
+                   pop('Product Name ' + productName);
+
+                   //set Name
+                   div.querySelector('.s_item_span_pName').textContent = productName;
+                   //set Image
+                   div.querySelector('.s_item_p_image').src = imageUrl;
+                    div.querySelector('.s_item_p_image').style.width = '100px';
+                 this.lists.appendChild(container);
+               }
+
+
+
+
+
 
 }
+AdminManager.prototype.getDetails = function(pid) {
+    pop('Inside Get Details for Pid of '+pid);
+    var bookReff = firebase.database().ref().child('products/books/');
+    bookReff.orderByChild("pid").equalTo(pid)
+        .on('child_added',function (e) {
+            //These are the Messages , show it to Them
+            this.showProduct(e.val().imageURL,e.val().pName,e.val().pid,e.val().MRP,e.val().productDescription);
+        }.bind(this));
+}
 AdminManager.prototype.searchProduct = function (data) {
-
 
 
 
@@ -606,13 +409,14 @@ AdminManager.prototype.searchProduct = function (data) {
 
         if (singleBook.pName.includes(mSearchQueryText)) {
 
+
+            pop(this);
             // Names Match
             // Push to Pid Array
-            window.pids.push(singleBook.pid);
-            showProduct(singleBook.pid);
+            this.getDetails(singleBook.pid);
         }
 
-    });
+    }.bind(this));
 
 
 
@@ -640,16 +444,19 @@ AdminManager.prototype.searchProduct = function (data) {
 * fill Sub catgory according to Genre
 * */
 
-              AdminManager.SEARCH_ITEM =  '<div class="mdl-card mdl-shadow--8dp">'+
+              AdminManager.SEARCH_ITEM =  '<div class="mdl-card mdl-shadow--8dp " style="width: 80%">'+
 
                                                 //The Product Title
-                                                '<div class = "mdl-card__title">' +
-                                                    '<span id="s_item_span_pName">Product Name</span>' +
+                                                '<div class = "mdl-card__title ">' +
+                                                    '<span class ="s_item_span_pName">Product Name</span>' +
                                                 '</div>'+
-                                                //The Product Id
-                                                '<span id="s_item_span_pid"> Pid</span>'+
-                                                //Product Image
-                                                '<span id="s_item_p_count"></span>'+
+                                                '<div class="mdl-card__supporting-text">'  +
+                                                      //The Product Id
+                                                       '<span class="s_item_span_pid"> Pid</span>'+
+                                                           //Product Image
+                                                        '<img class="s_item_p_image">'+
+
+                                                '</div>'    +
 
 
                                              '</div>';

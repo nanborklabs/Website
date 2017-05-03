@@ -212,3 +212,15 @@ body{
 
 
 }
+/*Create Combo Page*/
+
+.c_combo_holder{
+    min-width: 80%;
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-top: 5%;
+}
+
+.combo_top_holder{
+   margin-left: 10%;
+}
