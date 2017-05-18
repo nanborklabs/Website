@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+Na<!DOCTYPE html>
 <html xmlns:border="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8">
@@ -140,7 +140,6 @@
             </div>
 
           </section>
-
         </div>
 
         <!--2nd Tab Adding Books-->
@@ -394,7 +393,7 @@
 
           </div>
         <!--3rd  Tab Searching Tabs-->
-        <div class="mdl-layout__tab-panel search_root" id="Search">
+        <div class="mdl-layout__tab-panel" id="Search">
 
           <div class="search_top_contaier">
 
@@ -412,7 +411,6 @@
             <div id="lists1">
               <span id="lists-filler"></span>
             </div>
-
        </div>
          
 
@@ -422,19 +420,23 @@
             <!--Qunatity-->
               <!-- 3 . Three autcomplete CheckBoxes-->
 
-
-        <div class="mdl-layout__tab-panel search_root" id="c_combo">
+          <!-- Fourth Tab Combo Creation -->
+        <div class="mdl-layout__tab-panel" id="c_combo">
 
          <!--The Root  Combo Holder Belwo it is the Submmit Button-->
 
           <div class="mdl-card mdl-shadow--8dp center c_combo_holder">
-
-
              <div class="mdl-card-title combo_top_holder">
-               <h5> Combos Determine the sales;</h5>
+               <h5> Combos  </h5>
                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                 <input class="mdl-textfield__input" type="text" id="combo_name" pattern="[A-Z,a-z, ]*">
                 <label class="mdl-textfield__label" for="combo_name">Combo Name</label>
+              </div>
+              <br>
+              <p>Combo Description</p>
+               <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" type="text" id="combo_desc" pattern="[A-Z,a-z, ]*">
+                <label class="mdl-textfield__label" for="combo_desc">Combo Description(100 Words)</label>
               </div>
              </div>
              <div class="mdl-card__supporting-text">
@@ -447,7 +449,7 @@
               </div>
               <br>
               <p>Product 2 : </p>
-                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--jfloating-label">
               <input class="mdl-textfield__input" type="text" id="c2" pattern="[A-Z,a-z, ]*">
 
               <label class="mdl-textfield__label" for="c2">Enter product 2</label>
@@ -477,7 +479,7 @@
                    <tbody class="table_body">
                    <tr>
                      <td><input class="mdl-textfield__input c_class"  pattern="[0-9]*" type="number" style="border:1px solid #36353F"  id="c_unit_one"></td>
-                     <td> <select class="mdl-select__input c_class select_class"  id="C_time_value1" name="TimeUnit">
+                     <td> <select class="mdl-select__input c_class select_class"  id="c_time_value1" name="TimeUnit">
                        <option value="0">Select Time Unit</option>
                        <option value="1">Day</option>
                        <option value="2">Week</option>
@@ -537,7 +539,7 @@
                </div>
 
               <!--The Insert Combo Button-->
-               <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent insert_combo_button">
+               <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent insert_combo_button" id='submitComboButton'>
                     Insert Combo
                </button>
 
@@ -549,8 +551,9 @@
           </div>
         </div>
 
+        <!-- Fifth tab -->
 
-        <div class="mdl-layout__tab-panel search_root" id="edit_book">
+        <div class="mdl-layout__tab-panel" id="edit_book">
 
           <div class="mdl-card mdl-shadow--8dp left_side">
 
@@ -559,20 +562,24 @@
             <div class="mdl-card__title ">
               <h2 class="mdl-card__title-text">Edit  Product </h2>
             </div>
-            <div class="p_desc_container">
-              <form id="add_form">
+            <div class="mdl-card__supporting-text edit_p_desc_container">
+              <form id="edit_form">
+
 
 
                 <div class="mdl-card-title">
                   <h7 class="mdl-card__title-text">Enter Pid To Auto fill</h7>
                 </div>
                 <!-- Pid -->
-                <div class="pid_container">
-                  <p id="pid_text_para">Pid (Generated)</p>
-                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="pid_div">
+                <div class="edit_pid_container">
+                  
+                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="edit_pid_div">
                         <input class="mdl-textfield__input" type="text" id="e_pid_text" >
                         <label class="mdl-textfield__label" for="e_pid_text">PID...</label>
                   </div>
+                   <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent get_edit_button" id="edit_pid_button">
+                   Get Details
+                 </button>
                 </div>
 
                 <!--Product Name-->
@@ -634,13 +641,13 @@
 
                 <!--ISBN 10-->
                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                  <input class="mdl-textfield__input" type="text" id="isbn10" pattern="[0-9]*">
-                  <label class="mdl-textfield__label" for="isbn10">ISBN 10</label>
+                  <input class="mdl-textfield__input" type="text" id="eisbn10" pattern="[0-9]*">
+                  <label class="mdl-textfield__label" for="eisbn10">ISBN 10</label>
                 </div>
                 <!--ISBN 13-->
                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                  <input class="mdl-textfield__input" type="text" id="isbn13" pattern="[0-9]*">
-                  <label class="mdl-textfield__label" for="isbn13">ISBN 13</label>
+                  <input class="mdl-textfield__input" type="text" id="eisbn13" pattern="[0-9]*">
+                  <label class="mdl-textfield__label" for="eisbn13">ISBN 13</label>
                 </div>
                 <!--Published Date-->
                 <p>Date Published <input type="text" id="datepicker"></p>
@@ -648,15 +655,15 @@
 
                 <!--MRP Price-->
                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                  <input class="mdl-textfield__input" type="text" id="mrp" pattern="[0-9]*">
-                  <label class="mdl-textfield__label" for="mrp">MRP</label>
+                  <input class="mdl-textfield__input" type="text" id="emrp" pattern="[0-9]*">
+                  <label class="mdl-textfield__label" for="emrp">MRP</label>
                 </div>
 
 
                 <!--Our Buying Price-->
                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                  <input class="mdl-textfield__input" type="text" id="our_price" pattern="[0-9]*">
-                  <label class="mdl-textfield__label" for="our_price">Our Price</label>
+                  <input class="mdl-textfield__input" type="text" id="eour_price" pattern="[0-9]*">
+                  <label class="mdl-textfield__label" for="eour_price">Our Price</label>
                 </div>
 
 
@@ -720,35 +727,35 @@
 
                 <tbody class="table_body">
                 <tr>
-                  <td><input class="mdl-textfield__input c_class"  pattern="[0-9]*" type="number" style="border:1px solid #36353F"  id="unit_one_text"></td>
+                  <td><input class="mdl-textfield__input c_class"  pattern="[0-9]*" type="number" style="border:1px solid #36353F"  id="eunit_one_text"></td>
                   <td> <select class="mdl-select__input c_class select_class"  id="time_value1" name="TimeUnit">
                     <option value="0">Select Time Unit</option>
                     <option value="1">Day</option>
                     <option value="2">Week</option>
                     <option value="3">Month</option>
                   </select></td>
-                  <td> <input class="mdl-textfield__input c_class pric_text" style="border:1px solid #36353F" type="number" id="price_one_text"></td>
+                  <td> <input class="mdl-textfield__input c_class pric_text" style="border:1px solid #36353F" type="number" id="eprice_one_text"></td>
                 </tr>
 
                 <tr>
-                  <td><input class="mdl-textfield__input c_class"  type="number" style="border:1px solid #36353F"  id="unit_two_text"></td>
-                  <td> <select class="mdl-select__input c_class select_class"  id="time_value2" name="TimeUnit">
+                  <td><input class="mdl-textfield__input c_class"  type="number" style="border:1px solid #36353F"  id="eunit_two_text"></td>
+                  <td> <select class="mdl-select__input c_class select_class"  id="etime_value2" name="TimeUnit">
                     <option value="0">Select Time Unit</option>
                     <option value="1">Day</option>
                     <option value="2">Week</option>
                     <option value="3">Month</option>
                   </select></td>
-                  <td> <input class="mdl-textfield__input c_class pric_text" style="border:1px solid #36353F" type="number" id="price_two_text"></td>
+                  <td> <input class="mdl-textfield__input c_class pric_text" style="border:1px solid #36353F" type="number" id="eprice_two_text"></td>
                 </tr>
                 <tr>
-                  <td><input class="mdl-textfield__input c_class"  type="number" style="border:1px solid #36353F"  id="unit_three_text"></td>
+                  <td><input class="mdl-textfield__input c_class"  type="number" style="border:1px solid #36353F"  id="eunit_three_text"></td>
                   <td> <select class="mdl-select__input c_class select_class"  id="time_value13" name="TimeUnit">
                     <option value="0">Select Time Unit</option>
                     <option value="1">Day</option>
                     <option value="2">Week</option>
                     <option value="3">Month</option>
                   </select></td>
-                  <td> <input class="mdl-textfield__input c_class pric_text" style="border:1px solid #36353F" type="number" id="price_three_text"></td>
+                  <td> <input class="mdl-textfield__input c_class pric_text" style="border:1px solid #36353F" type="number" id="eprice_three_text"></td>
                 </tr>
                 </tbody>
                              </table>

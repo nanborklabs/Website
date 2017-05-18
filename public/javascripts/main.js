@@ -1,19 +1,171 @@
 
 
 'use strict';
+///The main Inistilisation code
+
+function AdminManager() {
+
+    this.checkSetup();
+    // this.isSignedIn();todo: Add sign In
+
+    pop('Initializing Variables');
+
+    //Firebase Varaibles
+    this.auth = firebase.auth();
+
+    this.database = firebase.database();
+    this.storage = firebase.storage();
+    this.stroageRef = this.storage.ref();
+
+    //Initialize DOM Variables
 
 
 
 
 
 
+    //Add Book page variables
+    this.productName = document.getElementById('pname');
+    this.pid = document.getElementById('pid_text');
+    this.pdesc = document.getElementById('pdesc');
+    this.authorName = document.getElementById('aname');
+    this.bSumm = document.getElementById('bsummary');
+    this.publiserName  = document.getElementById('pubname');
+    this.baseCategory = document.getElementById('base_category');
+    this.subCateogry  = document.getElementById('sub_category');
+    this.date = $("#datepicker").datepicker();
+    this.ISBN  = document.getElementById('isbn10');
+    this.ISBN13 = document.getElementById('isbn13');
+    this.MRP  = document.getElementById('mrp');
+    this.ourPrice = document.getElementById('our_price');
+    this.isBestSeller  = document.getElementById('best_seller');;
+    this.isTopRated = document.getElementById('top_rate');;
+    this.searchTags = document.getElementById('tags') ;
+
+    //prcing 
+    this.unit1 = document.getElementById('unit_one_text');
+    this.unit2 = document.getElementById('unit_two_text');
+    this.unit3 = document.getElementById('unit_three_text');
+
+    //Time Unit
+    this.tm1 = document.getElementById('time_value1');
+    this.tm2 = document.getElementById('time_value2');
+    this.tm3 = document.getElementById('time_value13');
+
+    //Price
+    this.price1 = document.getElementById('price_one_text');
+    this.price2 = document.getElementById('price_two_text');
+    this.price3 = document.getElementById('price_three_text');
+    //Image Upload Related DoM's
+    this.submitImageButton = document.getElementById('submitImage');
+    this.imageForm = document.getElementById('image-form');
+    this.mediaCapture = document.getElementById('mediaCapture');
+    //insert Product Button
+
+    this.insetProductutton = document.getElementById('submit_button');
+    this.insetProductutton.addEventListener('click',this.insertProduct.bind(this));
+    //snackBar
+    this.snackBar = document.getElementById('must-signin-snackbar');
+
+    // Image upload
+    this.submitImageButton.addEventListener('click',function (e) {
+        e.preventDefault();
+        this.mediaCapture.click();
+    }.bind(this));
+
+    this.mediaCapture.addEventListener('change',this.saveImage.bind(this));
+        // Setting Pi -  NumChildren+1 in "books";
+    this.setPid(this.database);
 
 
 
-/*This Method Queries the Database Child Cont and PID is Incremented from Child Value*/
-AdminManager.prototype.setPidToEntity = function (count) {
-    this.productEntitiy.pid = count;
-};
+    
+    
+    //Search Functionality
+    pop('Search initliazed');
+    this.editbox = document.getElementById('search_editbox');
+    this.searchButton = document.getElementById('search_button');
+    this.searchButton.addEventListener('click',this.searchProduct.bind(this));
+    this.lists = document.getElementById('lists1');
+
+    //create Combo 
+    this.comboName  = document.getElementById('combo_name');
+    // this.comboDescription = document.getElementById('');
+    this.comboDesc = document.getElementById('combo_desc');
+
+    // //Combo Products Pid
+        this.cpid1 ;
+        this.cpid2;
+        this.cpid3;
+
+    //Combo Product Name
+        this.productName1;
+        this.productName2;
+        this.productName3;
+    //Combo  Unit Values;
+    this.cunit1  = document.getElementById('c_unit_one');
+    this.cunit2 =  document.getElementById('c_unit_two');
+
+    this.cunit3 =  document.getElementById('c_unit_three');
+
+    //Combo TmeValues
+
+    this.cTimeUnit1=  document.getElementById('c_time_value1');
+    this.cTimeUnit2 =  document.getElementById('c_time_value1');
+    this.cTimeUnit3=  document.getElementById('c_time_value1');
+
+    //Pricing
+    this.cpricing1=  document.getElementById('c_price_one_text');
+    this.cpricing2=  document.getElementById('c_price_two_text');
+    this.cpricing3 =  document.getElementById('c_price_three_text');
+
+    //Combo Image
+    this.cSubmitImageButton = document.getElementById('c_submitImage');
+    this.cImageForm = document.getElementById('c_image-form');
+    this.cMediaCapture = document.getElementById('cMediaCapture');
+
+    this.cSubmitImageButton.addEventListener('click',function (e) {
+        e.preventDefault();
+        this.cMediaCapture.click();
+    }.bind(this));
+
+    this.cMediaCapture.addEventListener('change',this.saveComboImage.bind(this));
+    this.cInsertComboButton = document.getElementById('submitComboButton');
+    this.cInsertComboButton.addEventListener('click',this.insertComboProduct.bind(this));
+
+
+
+    //Edit Functionality 
+    this.ePid =  document.getElementById('e_pid_text');
+    this.ePname=  document.getElementById('e_pname');
+    this.ePublisherName=  document.getElementById('epubname');
+    this.eISBN10 =  document.getElementById('eisbn10');
+    this.eISBN13 = document.getElementById('eisbn13');
+    this.eBookSummary = document.getElementById('ebsummary');
+    this.eAuthorName = document.getElementById('eaname');
+    this.eMRP=  document.getElementById('emrp');
+    this.eOurPrice=  document.getElementById('eour_price');
+    this.ePdesc=  document.getElementById('epdesc');
+    this.eUnit1 =  document.getElementById('eunit_one_text');
+    this.eunit2 =  document.getElementById('eunit_two_text');
+    this.eUnit3 =  document.getElementById('eunit_three_text');
+
+    this.ePricing1 = document.getElementById('eprice_one_text');
+    this.ePricing2 = document.getElementById('eprice_two_text');
+    this.ePricing3 = document.getElementById('eprice_three_text');
+    this.searchPidButton  = document.getElementById('edit_pid_button');
+    this.searchPidButton.addEventListener('click',this.populateEditBoxes.bind(this));
+    // this.updateProductbutton = =  document.getElementById('');
+
+    //Edit image uploads
+
+
+
+
+}
+
+
+
 AdminManager.prototype.setPid = function (db) {
 
     pop('set PId Method');
@@ -84,7 +236,7 @@ var pricing= {
     }
 
 };
-u6
+
 AdminManager.prototype.insertProduct = function (event) {
 
     pop(this.productEntitiy.imageURL);
@@ -102,9 +254,58 @@ AdminManager.prototype.isImageUploded = false;
 
 
 AdminManager.prototype.matched_PID_Array = [];
+
+
+AdminManager.prototype.comboEntity = {
+    // comboId : '',
+    comboName:'',
+  
+    comboDescription:'',
+    // products : {
+    //     "p1":{
+    //         productName:'',
+    //         pid:'',
+    //         imageURL : ''
+    //     },
+    //      "p2":{
+    //         productName:'',
+    //         pid:'',
+    //         imageURL : ''
+    //     },
+    //      "p3":{
+    //         productName:'',
+    //         pid:'',
+    //         imageURL : ''
+    //     }
+    // },
+    c_pricing:{
+        c_pricing1:{
+            unit:'',
+            timeUnit:'',
+            price:''
+
+        },  c_pricing2:{
+            unit:'',
+            timeUnit:'',
+            price:''
+
+        },
+        c_pricing3:{
+            unit:'',
+            timeUnit:'',
+            price:''
+
+        }
+    },
+    imageURL :'',
+    // quantity : '',
+    tags:{
+      tag1:'fdsaf',
+        tag2:'afssd',
+    }
+}
 AdminManager.prototype.productEntitiy = {
     pid:'',
-      imageURL : '',
     pName:'',
     productDescription:'',
     authorName:'',
@@ -120,7 +321,7 @@ AdminManager.prototype.productEntitiy = {
     quantity : '',
     tags:{
       tag1:'fdsaf',
-        tag2:'afssd',
+      tag2:'afssd'
 
     },
     details:{
@@ -242,105 +443,6 @@ AdminManager.prototype.isSignedIn = function () {
     // });
 
 };
-function AdminManager() {
-
-    this.checkSetup();
-    // this.isSignedIn();
-
-
-
-    pop('Initializing Variables');
-
-    //Initialize vDOM Variables
-    this.productName = document.getElementById('pname');
-
-    this.pid = document.getElementById('pid_text');
-    this.pdesc = document.getElementById('pdesc');
-    this.authorName = document.getElementById('aname');
-    this.bSumm = document.getElementById('bsummary');
-    this.publiserName  = document.getElementById('pubname');
-    this.baseCategory = document.getElementById('base_category');
-    this.subCateogry  = document.getElementById('sub_category');
-
-    this.date = $("#datepicker").datepicker();
-    this.ISBN  = document.getElementById('isbn10');
-    this.ISBN13 = document.getElementById('isbn13');
-
-    this.MRP  = document.getElementById('mrp');
-    this.ourPrice = document.getElementById('our_price');
-    this.isBestSeller  = document.getElementById('best_seller');;
-    this.isTopRated = document.getElementById('top_rate');;
-    this.searchTags = document.getElementById('tags') ;
-
-    //Image Upload Related DoM's
-    this.submitImageButton = document.getElementById('submitImage');
-    this.imageForm = document.getElementById('image-form');
-    this.mediaCapture = document.getElementById('mediaCapture');
-
-    this.snackBar = document.getElementById('must-signin-snackbar');
-
-    this.insetProductutton = document.getElementById('submit_button');
-    this.insetProductutton.addEventListener('click',this.insertProduct.bind(this));
-
-
-    //events for Image pload
-    this.submitImageButton.addEventListener('click',function (e) {
-        e.preventDefault();
-        this.mediaCapture.click();
-    }.bind(this));
-
-    this.mediaCapture.addEventListener('change',this.saveImage.bind(this));
-
-
-    //
-    this.unit1 = document.getElementById('unit_one_text');
-    this.unit2 = document.getElementById('unit_two_text');
-    this.unit3 = document.getElementById('unit_three_text');
-
-    //Time Unit
-    this.tm1 = document.getElementById('time_value1');
-    this.tm2 = document.getElementById('time_value2');
-    this.tm3 = document.getElementById('time_value13');
-
-    //Price
-    this.price1 = document.getElementById('price_one_text');
-    this.price2 = document.getElementById('price_two_text');
-    this.price3 = document.getElementById('price_three_text');
-
-    this.auth = firebase.auth();
-
-    this.database = firebase.database();
-    this.storage = firebase.storage();
-    this.stroageRef = this.storage.ref();
-    this.setPid(this.database);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//    Search Functionality
-    pop('Search initliazed');
-    this.editbox = document.getElementById('search_editbox');
-    this.searchButton = document.getElementById('search_button');
-    this.searchButton.addEventListener('click',this.searchProduct.bind(this));
-    this.lists = document.getElementById('lists1');
-
-
-}
-
 
 
 
@@ -368,13 +470,23 @@ AdminManager.prototype.showProduct =  function (imageUrl,productName,pid,MRP,des
                  this.lists.appendChild(container);
                }
 
-
-
-
-
-
 }
-AdminManager.prototype.getDetails = function(pid) {
+
+
+
+
+/*
+*this function is used from different Pages 
+*and results are dispatched accordingly.
+1. 0 - function callfrom Search page
+2.  1 - function call from Edit Books Page
+*/
+
+
+AdminManager.prototype.getDetails = function(pid,fromWhere) {
+
+    if (fromWhere == 0) {
+        // For Search page
     pop('Inside Get Details for Pid of '+pid);
     var bookReff = firebase.database().ref().child('products/books/');
     bookReff.orderByChild("pid").equalTo(pid)
@@ -382,10 +494,18 @@ AdminManager.prototype.getDetails = function(pid) {
             //These are the Messages , show it to Them
             this.showProduct(e.val().imageURL,e.val().pName,e.val().pid,e.val().MRP,e.val().productDescription);
         }.bind(this));
-}
+  }
+  else if (fromWhere == 1) {
+    var bookReff = firebase.database().ref().child('products/books/');
+    bookReff.orderByChild("pid").equalTo(pid)
+        .on('child_added',function (snap) {
+            //These are the Messages , show it to Them
+            this.fillEditBoxes(snap);
+        }.bind(this));
+  }
+
+};
 AdminManager.prototype.searchProduct = function (data) {
-
-
 
 
     var mSearchQueryText = this.editbox.value;
@@ -401,7 +521,7 @@ AdminManager.prototype.searchProduct = function (data) {
     pop('Loading Child');
     //Strings(pName) are matched, if Hit
     // Push it window.pid(Array)
-    bookRefs.on("child_added", function(snapshot, prevChildKey) {
+    bookRefs.on("child_added", function (snapshot, prevChildKey) {
 
         //Get Te Single Child
         var singleBook = snapshot.val();
@@ -413,38 +533,15 @@ AdminManager.prototype.searchProduct = function (data) {
             pop(this);
             // Names Match
             // Push to Pid Array
-            this.getDetails(singleBook.pid);
+            this.getDetails(singleBook.pid,0);
         }
 
     }.bind(this));
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
 
-/*The Base Category Event Listener
-* if
-* Base Catgory Id = 0, alert
-* else
-* fill Sub catgory according to Genre
-* */
-
-              AdminManager.SEARCH_ITEM =  '<div class="mdl-card mdl-shadow--8dp " style="width: 80%">'+
+// The search Item view
+ AdminManager.SEARCH_ITEM =  '<div class="mdl-card mdl-shadow--8dp " style="width: 80%">'+
 
                                                 //The Product Title
                                                 '<div class = "mdl-card__title ">' +
@@ -455,18 +552,8 @@ AdminManager.prototype.searchProduct = function (data) {
                                                        '<span class="s_item_span_pid"> Pid</span>'+
                                                            //Product Image
                                                         '<img class="s_item_p_image">'+
-
-                                                '</div>'    +
-
-
+                                                '</div>'+
                                              '</div>';
-
-
-
-
-
-
-
 
 
 
@@ -755,26 +842,17 @@ AdminManager.prototype.validateFields  = function (){
             .then(function (snapshot) {
 
                 // this.insetProductutton.removeAttribute('hidden');
-                // this.resetEverything();
-                    pop('Inserted Successfully ');
+                this.resetEverything();
+                pop('Inserted Successfully ');
                 pop(snapshot.data);
-            })
+            }.bind(this))
             .catch(function (event) {
                 pop('Error in Inserting');
                 pop(event);
             })
         ;
 
-
-
-
-
-
-
-
 };
-
-
 
 AdminManager.prototype.clearFields = function () {
 
@@ -798,18 +876,14 @@ AdminManager.prototype.clearFields = function () {
     this.price3.value = '';
 
     this.searchTags.value = '';
-
-
 };
 AdminManager.prototype.resetEverything = function () {
     this.clearFields();
     this.setPid(this.database);
 }
-
 function dateSelected(date,ui) {
    pop(date);
 }
-
 function resetSubCategoriesOptions() {
     pop('clearing options');
     $('#sub_category').empty();
@@ -869,9 +943,249 @@ var populateCollegeBooks = function () {
 
 };
 
-/** This Method is Directly called from HTML
- * Which is what experts say so , who cares?
- * */
+
+
+//Combo Related Mehtods
+
+AdminManager.prototype.saveComboImage = function (event) {
+    event.preventDefault();
+    pop('combo Uploading');
+
+    var file = event.target.files[0];
+    this.cImageForm.reset();
+    if (!file.type.match('image.*')){
+        var data  = {
+            message: 'Upload Only Images',
+            timeout: 2000
+        };
+        this.signInSnackbar.MaterialSnackbar.showSnackbar(data);
+        return;
+
+    }
+    var filePath = 'productImages/combos/books/'+file.name;
+    this.comboPathRef = this.stroageRef.child(filePath);
+    this.comboPathRef.put(file)
+        .then(function (snapshot) {
+
+            this.comboEntity.imageURL = snapshot.downloadURL;
+            this.showImageUploadedToast();
+            // console.log(snapshot.downloadURL);
+            // pop(snapshot.fullpath.toString());
+            // pop(snapshot.key);
+            // var full_path = snapshot.metadata.fullpath;
+            // pop(full_path);
+        }.bind(this));
+};
+
+
+
+/*Insert Combo */
+
+
+AdminManager.prototype.insertComboProduct = function(event){
+    this.validateComboFields();
+
+};
+
+AdminManager.prototype.COMBO_PRODUCT_ITEM_1 = {
+    pid:'',
+    productName:'',
+    MRP:''
+};
+
+AdminManager.prototype.COMBO_PRODUCT_ITEM_2 = {
+    pid:'',
+    productName:'',
+    MRP:''
+};
+
+AdminManager.prototype.COMBO_PRODUCT_ITEM_3 = {
+    pid:'',
+    productName:'',
+   MRP:''
+};
+
+AdminManager.prototype.validateComboFields = function(event){
+
+
+    var cName = this.comboName.value;
+    if (!validateText(cName)) {
+        this.showEmptyText('Enter combo name');
+        return;
+    }
+    else{
+
+        pop('combo Name Not Epty '+cName);
+        this.comboEntity.comboName = cName;
+    }
+
+
+
+    var cDesc = this.comboDesc.value;
+    if (!validateText(cDesc)) {
+            this.showEmptyText('Enter Combo Description');
+            return;
+    }
+    else{
+        this.comboEntity.comboDescription = cDesc;
+    }
+    
+
+    var product1 = AdminManager.COMBO_PRODUCT_ITEM_1;
+    var product2 = AdminManager.COMBO_PRODUCT_ITEM_2;
+    var product3 = AdminManager.COMBO_PRODUCT_ITEM_3;
+
+    //ipdate pricing variables
+    //1st Price
+       var comboUnit1Value = this.cunit1.value;
+
+       if (!validateText(comboUnit1Value)) {
+            this.showEmptyText('Enter Unit 1');
+            return;
+       }
+       else{
+        this.comboEntity.c_pricing.c_pricing1.unit = comboUnit1Value;
+       }
+       var comboTimeUnit1Value  = this.cTimeUnit1.options[this.cTimeUnit1.selectedIndex].value;
+        if (comboUnit1Value == 0 ) {
+            this.showEmptyText('Enter TimeUnit for combo 1');
+            return;
+       }
+       else{
+        this.comboEntity.c_pricing.c_pricing1.timeUnit = comboUnit1Value;
+       }
+       var comboPricingOne = this.cpricing1.value;
+       if (!validateNumber(comboPricingOne)) {
+        this.showEmptyText('Enter Pricing for Product 1');
+       }
+       else{
+        this.comboEntity.c_pricing.c_pricing1.price = comboPricingOne;
+       }
+    //2nd Price
+       var comboUnit2Value = this.cunit2.value;
+        if (!validateNumber(comboUnit2Value)) {
+            this.showEmptyText('Enter Unit 2');
+            return;
+       }
+       else{
+        this.comboEntity.c_pricing.c_pricing2.unit = comboUnit2Value;
+       }
+
+
+       var comboTimeUnit2Value  = this.cTimeUnit2.options[this.cTimeUnit2.selectedIndex].value;
+         if (comboUnit2Value == 0 ) {
+            this.showEmptyText('Enter TimeUnit for combo 1');
+            return;
+       }
+       else{
+        this.comboEntity.c_pricing.c_pricing2.timeUnit = comboUnit2Value;
+       }
+
+
+       var comboPricingtwo = this.cpricing2.value;
+       if (!validateNumber(comboPricingtwo)) {
+        this.showEmptyText('Enter Pricing for Product 1');
+       }
+       else{
+        this.comboEntity.c_pricing.c_pricing2.price = comboPricingtwo;
+       }
+
+    //3rd Price
+       var comboUnit3Value = this.cunit3.value;
+         if (!validateNumber(comboUnit3Value)) {
+            this.showEmptyText('Enter Unit 3');
+            return;
+       }
+       else{
+        this.comboEntity.c_pricing.c_pricing3.unit = comboUnit3Value;
+       }
+
+
+      var comboTimeUnit3Value  = this.cTimeUnit3.options[this.cTimeUnit3.selectedIndex].value;
+        if (comboTimeUnit3Value == 0 ) {
+            this.showEmptyText('Enter TimeUnit 3 for combo');
+            return;
+       }
+       else{
+        this.comboEntity.c_pricing.c_pricing3.timeUnit = comboTimeUnit3Value;
+       }
+
+
+       var comboPricingthree = this.cpricing3.value;
+       if (!validateNumber(comboPricingthree)) {
+        this.showEmptyText('Enter Pricing for Product 1');
+       }
+       else{
+        this.comboEntity.c_pricing.c_pricing3.price = comboPricingthree;
+       }
+        pop('pushing Combo : '+this.comboEntity);
+        this.database.ref().child("/products/combos/")
+            .push(this.comboEntity)
+            .then(function (snapshot) {
+
+                // this.insetProductutton.removeAttribute('hidden');
+                // this.resetEverything();
+                pop('Combo Inserted Successfully ');
+                this.resetComboFields();
+            }.bind(this))
+            .catch(function (event) {
+                pop('Error in Inserting');
+                pop(event);
+            }) ;
+};
+
+
+
+
+AdminManager.prototype.resetComboFields = function(event){
+    pop('clearing Combo Fields');
+    this.comboName.value = '';
+    this.comboDesc.value = '';
+    this.cunit1.value = '';
+    this.cunit2.value = '';
+    this.cunit3.value = '';
+
+    this.cpricing1.value = '';
+    this.cpricing2.value = '';
+    this.cpricing3.value = '';
+
+};
+
+
+
+//Edit Implementations todo//change Method Names;
+
+AdminManager.prototype.populateEditBoxes = function(event){
+    var pid2find = this.ePid.value;
+    if (!validateNumber(pid2find)) {
+            //wrong  pid
+            this.showEmptyText('Enter Pid to Search');
+            return;
+    }
+    else{
+        //Pid Correct Format , Get the Books Reference
+
+            this.getDetails(singleBook.pid);
+    }
+};
+
+
+AdminManager.prototype.fillEditBoxes = function(snap){
+    pop('Filling EditBoxes');
+    this.ePname.value = snap.productName;
+    this.ePdesc.value = snap.productDescription;
+    this.eUnit3.value = snap.pricing.pricing3.unit;
+    this.eUnit1.value = snap.pricing.pricing1.unit;
+    this.eAuthorName.value = snap.authorName;
+    this.ePublisherName.value = snap.publisherName;
+    this.eMRP.value = snap.MRP;
+    this.eOurPrice.value = snap.ourPrice;
+    this.ePricing1.value = snap.pricing.pricing1.price;
+    this.ePricing2.value = snap.pricing.pricing2.price;
+    this.ePricing3.value = snap.pricing.pricing3.price;
+    };
+
+
 function baseCategorySelected(data){
     var vale = data.value;
     pop(data.value);
@@ -895,24 +1209,22 @@ function baseCategorySelected(data){
         default:
             break;
     }
+}
 
-
-
-
-
-};
 function fileUploaded(event){
         pop('in Function');
-
-};
-
+}
 
 function popAlert(data) {
     alert(data);
 }
 
 
-$(window).load(function (e) {
-    console.log('Admin Manager');
-    window.Admin = new AdminManager();
-});
+
+window.onload = function (event){
+    console.log('Initializing Admin manager');
+    window.admin = new AdminManager();
+}
+
+
+
