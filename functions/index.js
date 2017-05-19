@@ -8,6 +8,9 @@ admin.initializeApp(functions.config().firebase);
 
 
 
+
+
+
 //Functions of https are Endpoints/API/REST API/CONNECTION STRING
 //They are product a URL which needs to be hit with certain Parameters
 //The Params are defined above the Function
@@ -44,61 +47,30 @@ exports.homepage = functions.https.onRequest((req,res) => {
 	res.send(jsonify);
 });
 
-/* API  - SAVE FCM TOKEN 
- * Request params :
- *  			{
-				"fromWhere" : "0", // This can be 0,1,2
-				"uid":45,          // uid common key afa people are concered
-				"tokenId":"saAs.." // Genereated By Firebase 
-				}
-	Return params : 
-				{
-					"status":"1"    // This can be 0 or  1 , after saving the TokenId;
-				}
+
+/* API  - BROWSING PAGE
+ * Request Params:
+ *      { 
+ 	 		"mainCateteogry": " ",
+ 	 		"subCateogry":""
+ 	 	}
+ 	 	Response:
+ 	 		{
+				products:[]
+ 	 		}
  *
-*/
+ *
+ */
+exports.browsingPage = functions.https.onRequest((req,res)=>{
+	// Get Reqest Params
+	var mainCateteogry = req.body.mainCateteogry;
+	var subCateogry =  req.body.subCateogry;
+	//Query the Book refs;
+	//Send the Resources back
+});
 
-exports.saveFcmToken = functions.https.onRequest((req, res) => {
-  // Grab the body Jsons
-  		var fromWhere  = req.body.fromWhere;
-  		var tokenId = req.body.tokenId;
-  		var uid = req.body.uid;
-  		var db = admin.database();
-    	
-    	//user,rider,partner
-  		if (fromWhere == 0){
-  			// This is Sent from a customer app
-  			var userRef = db.ref("users/{userId}/uid");
-  			 userRef.on("child_added", function(snapshot, prevChildKey) {
-  			 	if (uid == snapshot.uid) {
-  			 		//UID matches
-  			 		//update existing token associated with the user
-  			 		//todo: build a user Enitity
-  			 	}
-  			 }
-		}
-		else if(fromWhere == 1) {
-			//This is from riders app
-			var ridersRef = db.ref("riders");
-			ridersRef.on("child_added",function(snapshot,prevChildKey){
-				console.log(snapshot);
-			})
-		}
-		else if (fromWhere == 2) {
-			//this is From Partner app
-			var partnerRef = db.ref("partners");
-			partnerRef.on("child_added",function(snapshot,prevChildKey){
-				console.log(snapshot);
-			})
-		}
-		else{
-			console.log("Error");
-		}
-}
-);
 
-  			 
-  			 
+ 			 
 /* API  - PLACE ORDER
  * Request params :
  *  			{
@@ -185,24 +157,89 @@ exports.placeOrder  = functions.https.onRequest((req,res) => {
           //Send FCm to partner
 });
 
+/* API  - SAVE FCM TOKEN 
+ * Request params :
+ *  			{
+				"fromWhere" : "0", // This can be 0,1,2
+				"uid":45,          // uid common key afa people are concered
+				"tokenId":"saAs.." // Genereated By Firebase 
+				}
+	Return params : 
+				{
+					"status":"1"    // This can be 0 or  1 , after saving the TokenId;
+				}
+ *
+*/
 
-
-//This Function should be called when order is Entered
-exports.riderAcceptedOrder = functions.database.ref("/ordes/{isRiderAccepted}",onWrite =>{
-
+exports.saveFcmToken = functions.https.onRequest((req, res) => {
+  // Grab the body Jsons
+		var fromWhere  = req.body.fromWhere;
+  		var tokenId = req.body.tokenId;
+  		var uid = req.body.uid;
+  		var db = admin.database();
+    	
+    	//user,rider,partner
+  		if (fromWhere == 0){
+  			// This is Sent from a customer app
+  			var userRef = db.ref("users/{userId}/uid");
+  			 userRef.on("child_added", function(snapshot, prevChildKey) {
+  			 	if (uid == snapshot.uid) {
+  			 		//UID matches
+  			 		//update existing token associated with the user
+  			 		//todo: build a user Enitity
+  			 	}
+  			 }
+		}
+		else if(fromWhere == 1) {
+			//This is from riders app
+			var ridersRef = db.ref("riders");
+			ridersRef.on("child_added",function(snapshot,prevChildKey){
+				console.log(snapshot);
+			})
+		}
+		else if (fromWhere == 2) {
+			//this is From Partner app
+			var partnerRef = db.ref("partners");
+			partnerRef.on("child_added",function(snapshot,prevChildKey){
+				console.log(snapshot);
+			})
+		}
+		else{
+			console.log("Error");
+		}
 });
-exports.sendMessagetoDrivers = functions.database.ref("/orders/{orderId}",onWrite => {
-	// Order Has been get the Latest Order
-	var db = admin.database();
-	var ordersRef = db.ref("/orders/{orderId}");
-	ordersRef.on("child_added",function(snapshot,prevChildKey){
-		var lat = snapshot.lat;
-		var lon = snapshot.lng;
-		var userName = snapshot.userName;
-		var userPhoneNumber = snapshot.phoneNumber;
 
-	})
-})
+/*DATABSE TRIGGER  - ORDER UPDATE
+	After a New Order Inserted , Functions Invoked saying new order Received
+	to whoeve with a token Id;
+ *
+ *
+ */
+  			 
+ 
+ exports.sendMessageToAdmin  = functions.database.ref('/orders/{orderId}').onWrite(event =>{
+ 	//get the LatestOrderId - use LimittoLast() or loop through child added 
+ 	//get the Last Order 
+ 	//Send FCM Notification to Admin page/users/or Whereever
+
+ });
+
+
+/*Database Trigger - RIDER_ACCEPTED
+ *	Request Params
+ *
+ *
+ */
+ 	
+exports.riderAcceptedOrder = functions.database.ref('/orders/{orderId}').onWrite(event => {
+  //Change Order Status	
+  //Send N
+});
+exports.sendMessagetoDrivers = functions.database.ref("/orders/{orderId}").onWrite(event => {
+	// Order Has been get the Latest Order
+
+	
+});
 
 exports.searchProduct = functions.https.onRequest((req,res) => {
 	//get The Product Name;
